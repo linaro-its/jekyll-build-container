@@ -21,6 +21,7 @@ if [ -z "$JEKYLL_ENV" ]; then
 fi
 if [ "$JEKYLL_ENV" != "staging" ] && [ "$JEKYLL_ENV" != "production" ]; then
     echo "JEKYLL_ENV must be set to 'staging' or 'production'"
+    exit 1
 fi
 #
 # Install the bundle
