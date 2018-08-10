@@ -2,12 +2,13 @@
 #
 # If GEM_HOME isn't set, set a default
 if [ -z "$GEM_HOME" ]; then
-    export GEM_HOME=./.gems
+    GEM_HOME=$(pwd)/.gems
+    export GEM_HOME
 fi
 #
 # Make sure the gems directory exists
 if [ ! -d "$GEM_HOME" ]; then
-    mkdir $GEM_HOME
+    mkdir "$GEM_HOME"
 fi
 #
 # Check we've got defined vars
@@ -26,10 +27,12 @@ fi
 #
 # Check that we've got a source dir and a dest dir
 if [ -z "$SOURCE_DIR" ]; then
-    export SOURCE_DIR=./source_dir
+    SOURCE_DIR=$(pwd)/source_dir
+    export SOURCE_DIR
 fi
 if [ -z "$DEST_DIR" ]; then
-    export DEST_DIR=./dest_dir
+    DEST_DIR=$(pwd)/dest_dir
+    export DEST_DIR
 fi
 if [ ! -d "$SOURCE_DIR" ]; then
     echo "Cannot find source directory: $SOURCE_DIR"
@@ -50,7 +53,9 @@ if [ -z "$JEKYLL_ACTION" ]; then
 fi
 #
 # Install the bundle
+echo "Installing gems"
 bundle install --gemfile="$SOURCE_DIR/Gemfile"
 #
 # Build the site
+echo "bundle exec jekyll $JEKYLL_ACTION --source $SOURCE_DIR --destination $DEST_DIR --config $JEKYLL_CONFIG JEKYLL_ENV=$JEKYLL_ENV"
 bundle exec jekyll "$JEKYLL_ACTION" --source "$SOURCE_DIR" --destination "$DEST_DIR" --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
