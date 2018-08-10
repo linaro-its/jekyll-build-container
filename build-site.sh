@@ -62,4 +62,4 @@ bundle install
 #
 # Build the site
 echo "bundle exec jekyll $JEKYLL_ACTION --source $SOURCE_DIR --destination $DEST_DIR --config $JEKYLL_CONFIG JEKYLL_ENV=$JEKYLL_ENV"
-bundle exec jekyll "$JEKYLL_ACTION" --source "$SOURCE_DIR" --destination "$DEST_DIR" --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
+bundle exec jekyll "$JEKYLL_ACTION" -H 0.0.0.0 --source "$SOURCE_DIR" --destination "$DEST_DIR" --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
