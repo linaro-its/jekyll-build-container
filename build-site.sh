@@ -35,6 +35,10 @@ if [ ! -d "$SOURCE_DIR" ]; then
     echo "Cannot find source directory: $SOURCE_DIR"
     exit 1
 fi
+if [ ! -f "$SOURCE_DIR/Gemfile" ]; then
+    echo "Cannot find Gemfile in source directory: $SOURCE_DIR"
+    exit 1
+fi
 if [ ! -d "$DEST_DIR" ]; then
     echo "Cannot find destination directory: $DEST_DIR"
     exit 1
@@ -46,7 +50,7 @@ if [ -z "$JEKYLL_ACTION" ]; then
 fi
 #
 # Install the bundle
-bundle Install
+bundle install --gemfile="$SOURCE_DIR/Gemfile"
 #
 # Build the site
 bundle exec jekyll "$JEKYLL_ACTION" --source "$SOURCE_DIR" --destination "$DEST_DIR" --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"

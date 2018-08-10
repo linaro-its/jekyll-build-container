@@ -59,6 +59,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	ruby2.5-dev \
 # rmagick requires MagickWand libraries
 	libmagickwand-dev \
+	autoconf \
 	&& \
 	apt-get --purge autoremove -y && \
 	apt-get clean -y
