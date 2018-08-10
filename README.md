@@ -33,4 +33,4 @@ Issues with the Dockerfile and any of the scripts stored in the Dockerfile shoul
 ### Windows 10 notes
 If you encounter the error `driver failed programming external connectivity on endpoint`, please restart Docker on your system and try again. This appears to be related to the way Fast Start currently works. Source: [StackOverflow](https://stackoverflow.com/questions/44414130/docker-on-windows-10-driver-failed-programming-external-connectivity-on-endpoin)
 
-The message `Don't run Bundler as root.` can be ignored. This is a consequence of how the Linux environment is being used on top of the hosted site repo directory.
+The message `Don't run Bundler as root` can be ignored. This is a consequence of how the Linux environment is being used on top of the Windows-hosted site repo directory.
