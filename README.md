@@ -5,7 +5,7 @@ The container isolates the building of Linaro's Jekyll-based web sites. This avo
 
 Build the container in the usual way, e.g.
 
-`docker build --rm -t "linaroits/jekyllsitebuild:latest" .`
+`docker build --rm -t "linaroits/jekyllsitebuild" .`
 
 Note that, by itself, the container doesn't do much. The repositories for each site will contain the necessary scripts to build, test and serve the site. Those scripts do, though, use a build script included in this container.
 
