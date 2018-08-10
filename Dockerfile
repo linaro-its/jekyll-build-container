@@ -45,7 +45,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # Install latest software
 # Change the date time stamp if you want to rebuild the image from this point down
 # Useful for Dockerfile development
-ENV SOFTWARE_UPDATED 2018-08-09.1035
+ENV SOFTWARE_UPDATED 2018-08-10.0921
 
 # Install packages
 # Add update && upgrade to this layer in case we're rebuilding from here down
@@ -81,7 +81,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 ################################################################################
 # Dockerfile development only
-ENV CONFIG_UPDATED 2018-08-09.1035
+ENV CONFIG_UPDATED 2018-08-10.0921
 # COPY Gemfile /srv/Gemfile
 ################################################################################
 
