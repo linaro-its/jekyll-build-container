@@ -23,7 +23,7 @@ Note that, by itself, the container doesn't do much. The repositories for each s
 
 Linaro's Jekyll sites use a number of Gems in order to build. By default, the build process will install those gems in `<repo dir>/.gems`. If you want to override that (for example if you are building multiple sites and want to conserve space), set `GEM_HOME` before running any of the scripts in the web site repo.
 
-Before building the site, the environment variable `JEKYLL_ENV` needs to be set to `staging` or `production` to build the appropriate site. The scripts in the web site repo will default this to staging if you do not override it before running the scripts.
+Before building the site, the environment variable `JEKYLL_ENV` needs to be set to `staging` or `production` to build the appropriate site. The scripts in the web site repo will default this to `staging` if you do not override it before running the scripts.
 
 By default, the build process expects to be running in the directory of the repo, with the repo containing two directories: source_dir and dest_dir. If that is not the case, or if you want the build process to look elsewhere for the directories, you can set `SOURCE_DIR` and `DEST_DIR` before starting the build process. Please note, though, that the values for the variables must be relative to the container's directory structure and not the host's.
 
