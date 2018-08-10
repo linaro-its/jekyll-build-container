@@ -45,7 +45,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # Install latest software
 # Change the date time stamp if you want to rebuild the image from this point down
 # Useful for Dockerfile development
-ENV SOFTWARE_UPDATED 2018-08-10.1008
+ENV SOFTWARE_UPDATED 2018-08-10.1202
 
 # Install packages
 # Add update && upgrade to this layer in case we're rebuilding from here down
@@ -63,9 +63,18 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	autoconf \
 # Required by coffeescript
 	nodejs \
+# Required for Python package installation
+	python3-pip \
 	&& \
 	apt-get --purge autoremove -y && \
 	apt-get clean -y
+################################################################################
+
+################################################################################
+# Install Python packages used by the link checker
+RUN pip3 install \
+	bs4 \
+	aiohttp
 ################################################################################
 
 ################################################################################
@@ -84,7 +93,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 ################################################################################
 # Dockerfile development only
-ENV CONFIG_UPDATED 2018-08-10.1008
+ENV CONFIG_UPDATED 2018-08-10.1202
 # COPY Gemfile /srv/Gemfile
 ################################################################################
 
