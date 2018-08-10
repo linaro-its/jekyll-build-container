@@ -52,9 +52,13 @@ if [ -z "$JEKYLL_ACTION" ]; then
     export JEKYLL_ACTION="build"
 fi
 #
+# Change to the source directory rather than telling "bundle install"
+# where to find the Gemfile because Jekyll expects it to be in the
+# current directory.
+cd "$SOURCE_DIR" || exit
 # Install the bundle
 echo "Installing gems"
-bundle install --gemfile="$SOURCE_DIR/Gemfile"
+bundle install
 #
 # Build the site
 echo "bundle exec jekyll $JEKYLL_ACTION --source $SOURCE_DIR --destination $DEST_DIR --config $JEKYLL_CONFIG JEKYLL_ENV=$JEKYLL_ENV"
