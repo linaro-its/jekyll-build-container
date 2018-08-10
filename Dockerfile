@@ -45,7 +45,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # Install latest software
 # Change the date time stamp if you want to rebuild the image from this point down
 # Useful for Dockerfile development
-ENV SOFTWARE_UPDATED 2018-08-10.0921
+ENV SOFTWARE_UPDATED 2018-08-10.1008
 
 # Install packages
 # Add update && upgrade to this layer in case we're rebuilding from here down
@@ -59,7 +59,10 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	ruby2.5-dev \
 # rmagick requires MagickWand libraries
 	libmagickwand-dev \
+# Required when building nokogiri
 	autoconf \
+# Required by coffeescript
+	nodejs \
 	&& \
 	apt-get --purge autoremove -y && \
 	apt-get clean -y
@@ -81,7 +84,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 ################################################################################
 # Dockerfile development only
-ENV CONFIG_UPDATED 2018-08-10.0921
+ENV CONFIG_UPDATED 2018-08-10.1008
 # COPY Gemfile /srv/Gemfile
 ################################################################################
 
