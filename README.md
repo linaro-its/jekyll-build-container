@@ -28,7 +28,7 @@ Before building the site, the environment variable `JEKYLL_ENV` needs to be set 
 By default, the build process expects to be running in the directory of the repo, with the repo containing two directories: source_dir and dest_dir. If that is not the case, or if you want the build process to look elsewhere for the directories, you can set `SOURCE_DIR` and `DEST_DIR` before starting the build process. Please note, though, that the values for the variables must be relative to the container's directory structure and not the host's.
 
 ## PRs and Issues
-Issues with the Dockerfile and any of the scripts stored in the Dockerfile should be raised [here](https://github.com/LinaroITS/jekyll-build-container/new). If a site isn't building, please raise an issue on the repo of the site concerned.
+Issues with the Dockerfile and any of the scripts stored in the Dockerfile should be raised [here](https://github.com/linaro-its/jekyll-build-container/issues/new). If a site isn't building, please raise an issue on the repo of the site concerned.
 
 ### Windows 10 notes
 If you encounter the error `driver failed programming external connectivity on endpoint`, please restart Docker on your system and try again. This appears to be related to the way Fast Start currently works. Source: [StackOverflow](https://stackoverflow.com/questions/44414130/docker-on-windows-10-driver-failed-programming-external-connectivity-on-endpoin)
