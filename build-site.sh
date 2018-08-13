@@ -51,6 +51,11 @@ fi
 if [ -z "$JEKYLL_ACTION" ]; then
     export JEKYLL_ACTION="build"
 fi
+if [ "$JEKYLL_ACTION" == "serve" ]; then
+    HOST="-H 0.0.0.0"
+else
+    HOST=""
+fi
 #
 # Change to the source directory rather than telling "bundle install"
 # where to find the Gemfile because Jekyll expects it to be in the
@@ -61,5 +66,5 @@ echo "Installing gems"
 bundle install
 #
 # Build the site
-echo "bundle exec jekyll $JEKYLL_ACTION --source $SOURCE_DIR --destination $DEST_DIR --config $JEKYLL_CONFIG JEKYLL_ENV=$JEKYLL_ENV"
-bundle exec jekyll "$JEKYLL_ACTION" -H 0.0.0.0 --source "$SOURCE_DIR" --destination "$DEST_DIR" --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
+echo "bundle exec jekyll $JEKYLL_ACTION $HOST --source $SOURCE_DIR --destination $DEST_DIR --config $JEKYLL_CONFIG JEKYLL_ENV=$JEKYLL_ENV"
+bundle exec jekyll "$JEKYLL_ACTION" "$HOST" --source "$SOURCE_DIR" --destination "$DEST_DIR" --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
