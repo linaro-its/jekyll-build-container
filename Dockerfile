@@ -14,10 +14,9 @@ LABEL maintainer="it-services@linaro.org"
 # Tell apt not to use interactive prompts
 RUN export DEBIAN_FRONTEND=noninteractive && \
 # Clean package cache and upgrade all installed packages
-	apt-get clean \
-# No confirmation
-	-y && \
+	apt-get clean -y && \
 	apt-get update && \
+	apt-get install apt-utils -y && \
 	apt-get upgrade -y && \
 # Clean up package cache in this layer
 	apt-get --purge autoremove -y && \
@@ -36,10 +35,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	&& \
 # Set locale
 	dpkg-reconfigure locales && \
-	update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 \
 # Remove stale dependencies
 	apt-get --purge autoremove -y && \
 	apt-get clean -y
+
+# Set the defaults
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
 ################################################################################
 
 ################################################################################
@@ -74,6 +76,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 ################################################################################
 # Install Python packages used by the link checker
+RUN pip3 install wheel
 RUN pip3 install \
 	bs4 \
 	aiohttp
