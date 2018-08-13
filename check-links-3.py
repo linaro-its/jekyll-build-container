@@ -215,27 +215,24 @@ async def check_unique_links():
     status_count = 1
 
     web_failed_links = []
-    if len(unique_links) == 0:
-        print("No web links to check.")
-    else:
-        print("Checking %s web links ..." % len(unique_links))
-        # Force IPv4 only to avoid
-        # https://stackoverflow.com/questions/40347726/python-3-5-asyincio-and-aiohttp-errno-101-network-is-unreachable
-        conn = aiohttp.TCPConnector(
-            family=socket.AF_INET,
-            verify_ssl=False,
-            limit=500
-        )
-        async with aiohttp.ClientSession(connector=conn,
-                                         conn_timeout=60) as session:
-            await async_check_web(session, unique_links)
-        for p in file_link_pairs:
-            # p[0] is the file path and p[1] is the URL.
-            if (p[1] in html_cache_results and
-                    html_cache_results[p[1]] is not None):
-                error = [p[0], html_cache_results[p[1]]]
-                if error not in web_failed_links:
-                    web_failed_links.append(error)
+    print("Checking %s web links ..." % len(unique_links))
+    # Force IPv4 only to avoid
+    # https://stackoverflow.com/questions/40347726/python-3-5-asyincio-and-aiohttp-errno-101-network-is-unreachable
+    conn = aiohttp.TCPConnector(
+        family=socket.AF_INET,
+        verify_ssl=False,
+        limit=500
+    )
+    async with aiohttp.ClientSession(connector=conn,
+                                     conn_timeout=60) as session:
+        await async_check_web(session, unique_links)
+    for p in file_link_pairs:
+        # p[0] is the file path and p[1] is the URL.
+        if (p[1] in html_cache_results and
+                html_cache_results[p[1]] is not None):
+            error = [p[0], html_cache_results[p[1]]]
+            if error not in web_failed_links:
+                web_failed_links.append(error)
     return web_failed_links
 
 
@@ -301,12 +298,16 @@ def scan_directory(path, skip_list):
             for r in results:
                 if r not in failed_links:
                     failed_links.append(r)
-    if unique_links != []:
-        # Can do a simple append here because these are all web failures
+    if len(unique_links) == 0:
+        print("No web links to check.")
+    else:
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         cul_result = loop.run_until_complete(check_unique_links())
         loop.close()
+        # Can do a simple append here because these are all web failures
+        # and so don't need to check if the failure already exists in the
+        # list.
         failed_links += cul_result
     if failed_links != []:
         if output_file is not None:
