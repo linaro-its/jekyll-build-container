@@ -99,6 +99,8 @@ ENV CONFIG_UPDATED 2018-08-10.1202
 
 COPY build-site.sh /usr/local/bin/
 RUN chmod a+x /usr/local/bin/build-site.sh
+COPY check-links-3.py /usr/local/bin/
+RUN chmod a+x /usr/local/bin/check-links-3.py
 
 WORKDIR /srv
 
