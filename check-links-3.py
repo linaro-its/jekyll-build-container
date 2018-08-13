@@ -374,6 +374,10 @@ if __name__ == '__main__':
     if args.directory is not None:
         print("Scanning '%s'" % args.directory)
         os.chdir(args.directory)
+    if args.nointernal:
+        print("Skipping internal link checking")
+    if args.noexternal:
+        print("Skipping external link checking")
     # For now, assume that we're just scanning the current directory. Add code
     # for file paths and possibly URLs at a future date ...
     scan_directory("./", args.skip_path)
