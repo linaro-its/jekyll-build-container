@@ -65,6 +65,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	nodejs \
 # Required for Python package installation
 	python3-pip \
+	python3-setuptools \
 	&& \
 	apt-get --purge autoremove -y && \
 	apt-get clean -y
