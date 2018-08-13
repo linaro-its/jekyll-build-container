@@ -36,6 +36,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	&& \
 # Set locale
 	dpkg-reconfigure locales && \
+	update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 \
 # Remove stale dependencies
 	apt-get --purge autoremove -y && \
 	apt-get clean -y
