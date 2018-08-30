@@ -12,7 +12,6 @@ import socket
 import aiohttp
 import asyncio
 import concurrent
-import pprint
 
 # The link checking process depends on whether it is a relative
 # or absolute link. If it is a relative link, a file is looked for
@@ -23,6 +22,13 @@ import pprint
 # scan, all of the unique links are checked in an async process and
 # the results stored. Those results are then used to update the list
 # of filename/link pairs.
+
+
+CHROME = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) '
+                  'AppleWebKit/537.36 (KHTML, like Gecko) '
+                  'Chrome/41.0.2228.0 Safari/537.36'
+}
 
 
 def drop_dot(foo):
@@ -163,35 +169,59 @@ def output_status(code, value):
 
 
 async def async_check_link(session, url):
+    # Check that the host resolves
+    parts = urlparse(url)
     try:
-        async with session.head(url, allow_redirects=True) as response:
-            if response.status != 404:
-                if verbose >= 3:
-                    print(response.status, response.url)
-                return output_status('.', 0)
-            async with session.get(url) as response:
-                if response.status != 404:
+        foo = socket.gethostbyname(parts.netloc)  # noqa
+    except socket.gaierror as err:
+        return output_status('D', 1)
+    # Now try to validate the URL
+    try:
+        async with session.head(
+                url,
+                allow_redirects=True,
+                headers=CHROME) as response:
+            if response.status == 404 or response.status == 405:
+                # Some sites return 404/405 for HEAD requests, so we need to
+                # double-check with a full request.
+                async with session.get(
+                        url,
+                        allow_redirects=True,
+                        headers=CHROME) as response:
+                    if response.status != 404 and response.status != 405:
+                        return output_status('.', 0)
+                    return output_status('X', response.status)
+            else:
+                if (response.status < 400 or
+                        response.status > 499):
                     return output_status('.', 0)
-                return output_status('X', 1)
+                else:
+                    if verbose >= 3:
+                        print(response.status, response.url)
+                    # We only really care about full-on failures, i.e. 404.
+                    # Other status codes can be returned just because we aren't
+                    # using a browser, even if we do provide the agent string
+                    # for Chrome.
+                    return output_status('_', 0)
     # (Non-)Fatal errors
     except socket.gaierror as err:
-        pprint.pprint(err)
-        return output_status('a', 2)
+        print("Error while checking %s: %s" % (url, err))
+        return output_status('a', -2)
     # Non-fatal errors, but indicate which error we are getting
     except aiohttp.client_exceptions.ClientConnectorError:
-        return output_status('b', 3)
+        return output_status('b', -3)
     except aiohttp.client_exceptions.ServerTimeoutError:
-        return output_status('c', 4)
+        return output_status('c', -4)
     except concurrent.futures._base.CancelledError:
-        return output_status('d', 5)
+        return output_status('d', -5)
     except concurrent.futures._base.TimeoutError:
-        return output_status('e', 6)
+        return output_status('e', -6)
     except aiohttp.client_exceptions.ClientOSError:
-        return output_status('f', 7)
+        return output_status('f', -7)
     except aiohttp.client_exceptions.ServerDisconnectedError:
-        return output_status('g', 8)
+        return output_status('g', -8)
     except aiohttp.client_exceptions.ClientResponseError:
-        return output_status('h', 9)
+        return output_status('h', -9)
 
 
 async def async_check_web(session, links):
@@ -206,7 +236,7 @@ async def async_check_web(session, links):
         if l not in html_cache_results:
             if results[i] == 0:
                 html_cache_results[l] = None
-            elif results[i] == 1:  # or results[i] == 2:
+            elif results[i] > 0:
                 html_cache_results[l] = "%s [%d]" % (l, results[i])
         i += 1
 
@@ -333,7 +363,7 @@ def scan_directory(path, skip_list):
             print("%s:" % file)
             for ref in failure_dict[file]:
                 print("   %s" % ref)
-        print("\n[1] means 404 error, [2] means a problem with the URL")
+        # print("\n[1] means 404 error, [2] means a problem with the URL")
         if output_file is not None:
             sys.stdout = save_out
             fsock.close()
@@ -365,7 +395,7 @@ if __name__ == '__main__':
     verbose = 0
     output_file = None
 
-    print("Linaro Link Checker (2018-08-13)")
+    print("Linaro Link Checker (2018-08-30)")
 
     if args.verbose is not None:
         verbose = args.verbose
