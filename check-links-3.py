@@ -52,6 +52,9 @@ def validate_file_link(filename, text):
     # If there is an anchor (#) in the text, we need to look at what
     # comes before it.
     text = text.split("#")[0]
+    # If there is a query (?) in the text, we need to look at what
+    # comes before it.
+    text = text.split("?")[0]
     # If "text" starts with "/" then we need to be looking at the
     # path relative to where we started scanning.
     #
@@ -255,6 +258,14 @@ def check_file(filename, skip_list):
                 a_links.remove(g)
             for link in a_links:
                 result = validate_link(filename, link.get('href'))
+                if result is not None:
+                    error = [filename, result]
+                    if error not in file_failed_links:
+                        file_failed_links.append(error)
+            # Check linked images
+            img_links = soup.find_all('img')
+            for link in img_links:
+                result = validate_link(filename, link.get('src'))
                 if result is not None:
                     error = [filename, result]
                     if error not in file_failed_links:
