@@ -3,7 +3,7 @@ A Docker container used by Linaro's web site build process.
 
 The container isolates the building of Linaro's Jekyll-based web sites. This avoids needing to install directly on the host the numerous packages used when building the sites.
 
-In addition to the notes below, more documentation can be found on the [wiki](/wiki).
+In addition to the notes below, more documentation can be found on the [wiki](https://github.com/linaro-its/jekyll-build-container/wiki).
 
 ## Building
 ### Prerequisites
