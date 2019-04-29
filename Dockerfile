@@ -69,6 +69,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # Required for Python package installation
 	python3-pip \
 	python3-setuptools \
+# Network troubleshooting
+	net-tools \
 	&& \
 	apt-get --purge autoremove -y && \
 	apt-get clean -y
