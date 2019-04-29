@@ -53,5 +53,5 @@ fi
 cd "$SOURCE_DIR" || exit
 #
 # Build the site
-echo "bundle exec jekyll serve -H 127.0.0.1 --skip-initial-build --source $SOURCE_DIR --destination $DEST_DIR --config $JEKYLL_CONFIG JEKYLL_ENV=$JEKYLL_ENV"
-bundle exec jekyll serve -H 127.0.0.1 --skip-initial-build --source "$SOURCE_DIR" --destination "$DEST_DIR" --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
+echo "bundle exec jekyll serve -H 0.0.0.0 --skip-initial-build --source $SOURCE_DIR --destination $DEST_DIR --config $JEKYLL_CONFIG JEKYLL_ENV=$JEKYLL_ENV"
+bundle exec jekyll serve -H 0.0.0.0 --skip-initial-build --source "$SOURCE_DIR" --destination "$DEST_DIR" --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"

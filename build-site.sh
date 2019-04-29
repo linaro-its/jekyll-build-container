@@ -52,7 +52,7 @@ if [ -z "$JEKYLL_ACTION" ]; then
     export JEKYLL_ACTION="build"
 fi
 if [ "$JEKYLL_ACTION" == "serve" ]; then
-    HOST="-H 127.0.0.1"
+    HOST="-H 0.0.0.0"
 else
     HOST=""
 fi
