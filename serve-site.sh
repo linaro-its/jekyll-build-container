@@ -39,6 +39,12 @@ if [ ! -d "$GEM_HOME" ]; then
     mkdir "$GEM_HOME"
 fi
 #
+# Make sure that the user's home directory exists, to avoid bundler
+# complaining
+if [ ! -d "$HOME" ]; then
+    mkdir -P "$HOME"
+fi
+#
 # Change to the source directory rather than telling "bundle install"
 # where to find the Gemfile because Jekyll expects it to be in the
 # current directory.

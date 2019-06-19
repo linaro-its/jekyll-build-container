@@ -39,6 +39,12 @@ if [ ! -d "$GEM_HOME" ]; then
     mkdir "$GEM_HOME"
 fi
 #
+# Make sure that the user's home directory exists, to avoid bundler
+# complaining
+if [ ! -d "$HOME" ]; then
+    mkdir -P "$HOME"
+fi
+#
 # Default to building; allows override to serving.
 if [ -z "$JEKYLL_ACTION" ]; then
     export JEKYLL_ACTION="build"
