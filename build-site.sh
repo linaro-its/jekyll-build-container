@@ -60,5 +60,5 @@ echo "Installing gems"
 bundle install
 #
 # Build the site
-echo "bundle exec jekyll $JEKYLL_ACTION $HOST --source /srv/source --destination /srv/output --config $JEKYLL_CONFIG JEKYLL_ENV=$JEKYLL_ENV"
+echo "Building site"
 bundle exec jekyll "$JEKYLL_ACTION" "$HOST" --source /srv/source --destination /srv/output --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
