@@ -1,16 +1,5 @@
 #!/bin/bash
 #
-# If GEM_HOME isn't set, set a default
-if [ -z "$GEM_HOME" ]; then
-    GEM_HOME=$(pwd)/.gems
-    export GEM_HOME
-fi
-#
-# Make sure the gems directory exists
-if [ ! -d "$GEM_HOME" ]; then
-    mkdir "$GEM_HOME"
-fi
-#
 # Check we've got defined vars
 if [ -z "$JEKYLL_CONFIG" ]; then
     echo "JEKYLL_CONFIG needs to be set"
@@ -45,6 +34,17 @@ fi
 if [ ! -d "$DEST_DIR" ]; then
     echo "Cannot find destination directory: $DEST_DIR"
     exit 1
+fi
+#
+# If GEM_HOME isn't set, set a default
+if [ -z "$GEM_HOME" ]; then
+    GEM_HOME=$(pwd)/.gems
+    export GEM_HOME
+fi
+#
+# Make sure the gems directory exists
+if [ ! -d "$GEM_HOME" ]; then
+    mkdir "$GEM_HOME"
 fi
 #
 # Default to building; allows override to serving.
