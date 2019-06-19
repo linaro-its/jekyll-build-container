@@ -15,24 +15,16 @@ if [ "$JEKYLL_ENV" != "staging" ] && [ "$JEKYLL_ENV" != "production" ]; then
 fi
 #
 # Check that we've got a source dir and a dest dir
-if [ -z "$SOURCE_DIR" ]; then
-    SOURCE_DIR=$(pwd)/source_dir
-    export SOURCE_DIR
-fi
-if [ -z "$DEST_DIR" ]; then
-    DEST_DIR=$(pwd)/dest_dir
-    export DEST_DIR
-fi
-if [ ! -d "$SOURCE_DIR" ]; then
-    echo "Cannot find source directory: $SOURCE_DIR"
+if [ ! -d "/srv/source" ]; then
+    echo "Cannot find source directory"
     exit 1
 fi
-if [ ! -f "$SOURCE_DIR/Gemfile" ]; then
-    echo "Cannot find Gemfile in source directory: $SOURCE_DIR"
+if [ ! -f "/srv/source/Gemfile" ]; then
+    echo "Cannot find Gemfile in source directory"
     exit 1
 fi
-if [ ! -d "$DEST_DIR" ]; then
-    echo "Cannot find destination directory: $DEST_DIR"
+if [ ! -d "/srv/output" ]; then
+    echo "Cannot find output directory"
     exit 1
 fi
 #
@@ -60,11 +52,11 @@ fi
 # Change to the source directory rather than telling "bundle install"
 # where to find the Gemfile because Jekyll expects it to be in the
 # current directory.
-cd "$SOURCE_DIR" || exit
+cd "/srv/source" || exit
 # Install the bundle
 echo "Installing gems"
 bundle install
 #
 # Build the site
-echo "bundle exec jekyll $JEKYLL_ACTION $HOST --source $SOURCE_DIR --destination $DEST_DIR --config $JEKYLL_CONFIG JEKYLL_ENV=$JEKYLL_ENV"
-bundle exec jekyll "$JEKYLL_ACTION" "$HOST" --source "$SOURCE_DIR" --destination "$DEST_DIR" --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
+echo "bundle exec jekyll $JEKYLL_ACTION $HOST --source /srv/source --destination /srv/output --config $JEKYLL_CONFIG JEKYLL_ENV=$JEKYLL_ENV"
+bundle exec jekyll "$JEKYLL_ACTION" "$HOST" --source /srv/source --destination /srv/output --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
