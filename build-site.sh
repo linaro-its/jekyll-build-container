@@ -39,11 +39,10 @@ if [ ! -d "$GEM_HOME" ]; then
     mkdir "$GEM_HOME"
 fi
 #
-# Make sure that the user's home directory exists, to avoid bundler
-# complaining
-if [ ! -d "$HOME" ]; then
-    mkdir -P "$HOME"
-fi
+# Override $HOME to point at the volume-mounted directory. This is needed
+# because Bundle writes to a .bundle directory inside the user's home
+# directory.
+export HOME=/srv/home
 #
 # Default to building; allows override to serving.
 if [ -z "$JEKYLL_ACTION" ]; then
