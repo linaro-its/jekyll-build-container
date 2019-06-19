@@ -28,11 +28,8 @@ if [ ! -d "/srv/output" ]; then
     exit 1
 fi
 #
-# If GEM_HOME isn't set, set a default
-if [ -z "$GEM_HOME" ]; then
-    GEM_HOME=$(pwd)/.gems
-    export GEM_HOME
-fi
+# GEM_HOME in the container lives at /gems
+export GEM_HOME=/gems
 #
 # Make sure the gems directory exists
 if [ ! -d "$GEM_HOME" ]; then
