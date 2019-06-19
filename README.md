@@ -19,3 +19,6 @@ Build the container in the usual way, e.g.
 `docker build --rm -t "linaroits/jekyllsitebuild" .`
 
 Built containers can also be found on [Docker Hub](https://hub.docker.com/r/linaroits/jekyllsitebuild/tags/) for your convenience.
+
+### Assumptions
+Since Docker allows host directories to be volume-mounted into the container, this allows the scripts to be simplified because it is *assumed* that the source directory is mounted onto /srv/source and the output directory is mounted onto /srv/output.
