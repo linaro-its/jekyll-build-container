@@ -43,7 +43,7 @@ if [ -z "$JEKYLL_ACTION" ]; then
     export JEKYLL_ACTION="build"
 fi
 if [ "$JEKYLL_ACTION" == "serve" ]; then
-    HOST="-H 0.0.0.0"
+    HOST="-H0.0.0.0"
 else
     HOST=""
 fi
