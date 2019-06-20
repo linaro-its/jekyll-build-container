@@ -38,15 +38,20 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get update && \
 	apt-get upgrade -y && \
 	apt-get install -y --no-install-recommends \
-	&& true
-# # Jekyll prerequisites, https://jekyllrb.com/docs/installation/
-RUN export DEBIAN_FRONTEND=noninteractive && \
-	apt-get update && \
-	apt-get upgrade -y && \
-	apt-get install -y --no-install-recommends \
+# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
 	ruby2.5-dev \
 	gcc \
-	make
+	make \
+	&& \
+	apt-get --purge autoremove -y && \
+	apt-get clean -y \
+	&& \
+	rm -fr \
+	/var/cache \
+	/var/lib/apt/lists \
+	/var/log \
+	&& \
+	true
 # 	ruby-full \
 # 	build-essential \
 # 	zlib1g-dev \
