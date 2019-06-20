@@ -14,17 +14,14 @@ if [ "$JEKYLL_ENV" != "staging" ] && [ "$JEKYLL_ENV" != "production" ]; then
     exit 1
 fi
 #
-# Check that we've got a source dir and a dest dir
+# Check that we've got a source dir. We now always build the site inside the
+# source directory.
 if [ ! -d "/srv/source" ]; then
     echo "Cannot find source directory"
     exit 1
 fi
 if [ ! -f "/srv/source/Gemfile" ]; then
     echo "Cannot find Gemfile in source directory"
-    exit 1
-fi
-if [ ! -d "/srv/output" ]; then
-    echo "Cannot find output directory"
     exit 1
 fi
 #
@@ -61,4 +58,4 @@ bundle install
 #
 # Build the site
 echo "Building site"
-bundle exec jekyll "$JEKYLL_ACTION" "$HOST" --source /srv/source --destination /srv/output --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
+bundle exec jekyll "$JEKYLL_ACTION" "$HOST" --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
