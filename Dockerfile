@@ -40,6 +40,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get install -y --no-install-recommends \
 	&& true
 # # Jekyll prerequisites, https://jekyllrb.com/docs/installation/
+RUN export DEBIAN_FRONTEND=noninteractive && \
+	apt-get update && \
+	apt-get upgrade -y && \
+	apt-get install -y --no-install-recommends \
+	ruby2.5-dev \
+	gcc \
+	make
 # 	ruby-full \
 # 	build-essential \
 # 	zlib1g-dev \
@@ -78,6 +85,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # COPY build-site.sh check-links-3.py /usr/local/bin/
 # RUN chmod a+rx /usr/local/bin/build-site.sh /usr/local/bin/check-links-3.py
 
-# WORKDIR /srv
-# EXPOSE 4000
+WORKDIR /srv
+EXPOSE 4000
 # CMD /bin/bash
