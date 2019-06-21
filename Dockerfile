@@ -82,7 +82,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # NB: Sass deprecation warning is currently expected. See
 #     https://talk.jekyllrb.com/t/do-i-need-to-update-sass/2509
 RUN gem install --conservative \
-	bundler -v ${BUNDLER_GEM_VERSION} \
+	bundler -v ${BUNDLER_GEM_VERSION}
+RUN gem install --conservative \
 	jekyll -v ${JEKYLL_GEM_VERSION} \
 	&& \
 	true
