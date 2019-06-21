@@ -92,9 +92,9 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 ################################################################################
 # Install Bundler and Jekyll
-RUN gem install --conservative \
+RUN gem install --no-user-install \
  bundler -v ${BUNDLER_GEM_VERSION}
-RUN gem install --conservative \
+RUN gem install --no-user-install \
  jekyll -v ${JEKYLL_GEM_VERSION}
 ################################################################################
 
