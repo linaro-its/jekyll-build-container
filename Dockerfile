@@ -64,20 +64,20 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	rm -fr \
 	/var/cache \
 	/var/lib/apt/lists \
-	/var/log \
-	&& \
-	true
+	/var/log
 # # Install Python packages used by the link checker
 # 	pip3 install wheel && \
 # 	pip3 install \
 # 	bs4 \
 # 	aiohttp && \
-# # Install Bundler
-# # NB: Sass deprecation warning is currently expected. See
-# #     https://talk.jekyllrb.com/t/do-i-need-to-update-sass/2509
-# 	gem install --conservative \
-# 	bundler:1.17.2 \
+# Install Bundler
+# NB: Sass deprecation warning is currently expected. See
+#     https://talk.jekyllrb.com/t/do-i-need-to-update-sass/2509
+RUN gem install --conservative \
+	bundler:1.17.2 \
 # 	jekyll && \
+	&& \
+	true
 # 	apt-get --purge autoremove -y && \
 # 	apt-get clean -y
 # ################################################################################
