@@ -54,7 +54,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get upgrade -y && \
 	apt-get install -y --no-install-recommends \
 # Jekyll prerequisites, https://jekyllrb.com/docs/installation/
-	ruby${RUBY_PACKAGE_VERSION} \
+	ruby=${RUBY_PACKAGE_VERSION} \
 	${UNVERSIONED_PACKAGES} \
 # Jekyll site extra prerequisites
 # 	ruby-full \
