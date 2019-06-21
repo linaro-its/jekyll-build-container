@@ -42,6 +42,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	ruby2.5-dev \
 	gcc \
 	make \
+	libc6-dev \
 # 	ruby-full \
 # 	build-essential \
 # 	zlib1g-dev \
