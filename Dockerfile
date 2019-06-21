@@ -32,6 +32,7 @@ LABEL Bundler=${BUNDLER_GEM_VERSION}
 LABEL Jekyll=${JEKYLL_GEM_VERSION}
 
 ################################################################################
+# Install locale packages from Ubuntu repositories and set locale
 RUN export DEBIAN_FRONTEND=noninteractive && \
  apt-get clean -y && \
  apt-get update && \
@@ -54,7 +55,8 @@ ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 ################################################################################
 
-# Install packages
+################################################################################
+# Install packages from Ubuntu repositories
 # Add update && upgrade to this layer in case we're rebuilding from here down
 RUN export DEBIAN_FRONTEND=noninteractive && \
  apt-get update && \
@@ -85,17 +87,15 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
  /var/cache/* \
  /var/lib/apt/lists/* \
  /var/log/*
-# Install Bundler
-# NB: Sass deprecation warning is currently expected. See
-#     https://talk.jekyllrb.com/t/do-i-need-to-update-sass/2509
+################################################################################
+
+################################################################################
+# Install Bundler and Jekyll
 RUN gem install --conservative \
  bundler -v ${BUNDLER_GEM_VERSION}
 RUN gem install --conservative \
  jekyll -v ${JEKYLL_GEM_VERSION} \
- && \
- true
- # gem update --system
-# ################################################################################
+################################################################################
 
 WORKDIR /srv
 EXPOSE 4000
