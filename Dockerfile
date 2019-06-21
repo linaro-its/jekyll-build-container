@@ -23,8 +23,8 @@ ENV RUBY_PACKAGE_VERSION ${RUBY_PACKAGE_VERSION:-2.5-dev}
 ENV UNVERSIONED_PACKAGES \
 # Required for callback plugin
 	gcc \
-	make \
-	libc6-dev
+	libc6-dev \
+	make
 
 # File Authors / Maintainers
 # Initial Maintainer
