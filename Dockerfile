@@ -3,11 +3,32 @@
 # Set the base image to Ubuntu (version 18.04)
 # Uses the new "ubuntu-minimal" image
 # Should be Alpine like all the cool kids, but
-FROM ubuntu:18.04
+ARG UBUNTU_VERSION=18.04
+FROM ubuntu:${UBUNTU_VERSION}
+
+# Can be overridden per-site by jumbo-jekyll-theme:
+# https://rubygems.org/gems/jumbo-jekyll-theme/versions/
+ARG JEKYLL_GEM_VERSION
+ENV JEKYLL_GEM_VERSION ${JEKYLL_GEM_VERSION:-3.8.5}
+
+# Can be overridden per-site by jumbo-jekyll-theme:
+ARG BUNDLER_GEM_VERSION
+ENV BUNDLER_GEM_VERSION ${BUNDLER_GEM_VERSION:-2.02}
+
+ARG RUBY_PACKAGE_VERSION
+ENV RUBY_PACKAGE_VERSION ${RUBY_PACKAGE_VERSION:-2.5-dev}
+
+
+# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
+ENV UNVERSIONED_PACKAGES \
+# Required for callback plugin
+	gcc \
+	make \
+	libc6-dev
 
 # File Authors / Maintainers
 # Initial Maintainer
-LABEL maintainer="it-services@linaro.org"
+LABEL maintainer="ciaran.moran@linaro.org"
 
 ################################################################################
 RUN export DEBIAN_FRONTEND=noninteractive && \
@@ -26,12 +47,6 @@ ENV LC_ALL en_US.UTF-8
 ENV LANG en_US.UTF-8
 ################################################################################
 
-################################################################################
-# Install latest software
-# Change the date time stamp if you want to rebuild the image from this point down
-# Useful for Dockerfile development
-ENV SOFTWARE_UPDATED 2018-08-10.1202
-
 # Install packages
 # Add update && upgrade to this layer in case we're rebuilding from here down
 RUN export DEBIAN_FRONTEND=noninteractive && \
@@ -39,10 +54,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get upgrade -y && \
 	apt-get install -y --no-install-recommends \
 # Jekyll prerequisites, https://jekyllrb.com/docs/installation/
-	ruby2.5-dev \
-	gcc \
-	make \
-	libc6-dev \
+	ruby${RUBY_PACKAGE_VERSION} \
+	${UNVERSIONED_PACKAGES} \
 # Jekyll site extra prerequisites
 # 	ruby-full \
 # 	build-essential \
@@ -68,10 +81,11 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # NB: Sass deprecation warning is currently expected. See
 #     https://talk.jekyllrb.com/t/do-i-need-to-update-sass/2509
 RUN gem install --conservative \
-	bundler:1.17.2 \
-	jekyll \
+	bundler -v ${BUNDLER_GEM_VERSION} \
+	jekyll -v ${JEKYLL_GEM_VERSION} \
 	&& \
-	gem update --system
+	true
+	# gem update --system
 # ################################################################################
 
 WORKDIR /srv
