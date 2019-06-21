@@ -36,7 +36,8 @@ fi
 # Override $HOME to point at the volume-mounted directory. This is needed
 # because Bundle writes to a .bundle directory inside the user's home
 # directory.
-export HOME=/srv/home
+HOME=/srv
+export HOME
 #
 # Default to building; allows override to serving.
 if [ -z "$JEKYLL_ACTION" ]; then
