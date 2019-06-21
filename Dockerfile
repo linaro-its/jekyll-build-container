@@ -42,16 +42,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	ruby2.5-dev \
 	gcc \
 	make \
-	&& \
-	apt-get --purge autoremove -y && \
-	apt-get clean -y \
-	&& \
-	rm -fr \
-	/var/cache \
-	/var/lib/apt/lists \
-	/var/log \
-	&& \
-	true
 # 	ruby-full \
 # 	build-essential \
 # 	zlib1g-dev \
@@ -66,7 +56,17 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # 	nodejs \
 # # Required for Python package installation
 # 	python3-pip \
-# 	python3-setuptools && \
+# 	python3-setuptools \
+	&& \
+	apt-get --purge autoremove -y && \
+	apt-get clean -y \
+	&& \
+	rm -fr \
+	/var/cache \
+	/var/lib/apt/lists \
+	/var/log \
+	&& \
+	true
 # # Install Python packages used by the link checker
 # 	pip3 install wheel && \
 # 	pip3 install \
