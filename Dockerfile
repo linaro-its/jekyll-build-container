@@ -6,12 +6,12 @@
 ARG UBUNTU_VERSION=18.04
 FROM ubuntu:${UBUNTU_VERSION}
 
-# Can be overridden per-site by jumbo-jekyll-theme:
+# Can be overridden per-site by website repo, e.g by dependencies of:
 # https://rubygems.org/gems/jumbo-jekyll-theme/versions/
 ARG JEKYLL_GEM_VERSION
 ENV JEKYLL_GEM_VERSION ${JEKYLL_GEM_VERSION:-3.8.5}
 
-# Can be overridden per-site by jumbo-jekyll-theme:
+# Can be overridden per-site by website repo:
 ARG BUNDLER_GEM_VERSION
 ENV BUNDLER_GEM_VERSION ${BUNDLER_GEM_VERSION:-2.02}
 
