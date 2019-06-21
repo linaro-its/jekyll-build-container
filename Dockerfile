@@ -69,7 +69,9 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 #     https://talk.jekyllrb.com/t/do-i-need-to-update-sass/2509
 RUN gem install --conservative \
 	bundler:1.17.2 \
-	jekyll
+	jekyll \
+	&& \
+	gem update --system
 # ################################################################################
 
 WORKDIR /srv
