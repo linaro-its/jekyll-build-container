@@ -18,7 +18,6 @@ ENV BUNDLER_GEM_VERSION ${BUNDLER_GEM_VERSION:-2.0.2}
 ARG RUBY_PACKAGE_VERSION
 ENV RUBY_PACKAGE_VERSION ${RUBY_PACKAGE_VERSION:-2.5-dev}
 
-
 # Jekyll prerequisites, https://jekyllrb.com/docs/installation/
 ENV UNVERSIONED_PACKAGES \
 # Required for callback plugin
