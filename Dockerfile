@@ -94,7 +94,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 RUN gem install --conservative \
  bundler -v ${BUNDLER_GEM_VERSION}
 RUN gem install --conservative \
- jekyll -v ${JEKYLL_GEM_VERSION} \
+ jekyll -v ${JEKYLL_GEM_VERSION}
 ################################################################################
 
 WORKDIR /srv
