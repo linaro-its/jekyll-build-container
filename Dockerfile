@@ -21,6 +21,7 @@ ENV RUBY_PACKAGE_VERSION ${RUBY_PACKAGE_VERSION:-2.5-dev}
 # Jekyll prerequisites, https://jekyllrb.com/docs/installation/
 ENV UNVERSIONED_PACKAGES \
 # Required for callback plugin
+ g++ \
  gcc \
  libc6-dev \
  make
