@@ -28,7 +28,9 @@ ENV UNVERSIONED_PACKAGES \
 
 # File Authors / Maintainers
 # Initial Maintainer
-LABEL maintainer="ciaran.moran@linaro.org"
+LABEL maintainer="it-services@linaro.org"
+LABEL Bundler=${BUNDLER_GEM_VERSION}
+LABEL Jekyll=${JEKYLL_GEM_VERSION}
 
 ################################################################################
 RUN export DEBIAN_FRONTEND=noninteractive && \
@@ -40,7 +42,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
  locale-gen en_US.UTF-8 && \
  dpkg-reconfigure locales && \
  apt-get --purge autoremove -y && \
- apt-get clean -y
+ apt-get clean -y \
+ && \
+ rm -rf \
+ /tmp/* \
+ /var/cache/* \
+ /var/lib/apt/lists/* \
+ /var/log/*
 
 # Set the defaults
 ENV LC_ALL en_US.UTF-8
