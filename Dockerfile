@@ -73,10 +73,11 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	apt-get --purge autoremove -y && \
 	apt-get clean -y \
 	&& \
-	rm -fr \
-	/var/cache \
-	/var/lib/apt/lists \
-	/var/log
+	rm -rf \
+	/tmp/* \
+	/var/cache/* \
+	/var/lib/apt/lists/* \
+	/var/log/*
 # Install Bundler
 # NB: Sass deprecation warning is currently expected. See
 #     https://talk.jekyllrb.com/t/do-i-need-to-update-sass/2509
