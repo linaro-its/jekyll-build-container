@@ -43,13 +43,13 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	build-essential \
 	zlib1g-dev \
 # rmagick requires MagickWand libraries
-	libmagickwand-dev \
+ 	libmagickwand-dev \
 # Required when building webp images
 	imagemagick \
 	webp \
 # Required when building nokogiri
 	autoconf \
-# Required by coffeescript
+# Required by autofixer-rails
 	nodejs \
 # Required for Python package installation
 	python3-pip \
@@ -75,6 +75,7 @@ ENV CONFIG_UPDATED 2018-08-10.1202
 ################################################################################
 
 COPY build-site.sh check-links-3.py /usr/local/bin/
+COPY bamboo-build.txt /usr/local/etc/
 RUN chmod a+rx /usr/local/bin/build-site.sh /usr/local/bin/check-links-3.py
 
 WORKDIR /srv
