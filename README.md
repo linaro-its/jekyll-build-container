@@ -16,7 +16,18 @@ Building has been tested with [Docker Community Edition](https://www.docker.com/
 ### Building
 Build the container in the usual way, e.g.
 
-`docker build --rm -t "linaroits/jekyllsitebuild" .`
+`docker build --rm -t "linaroits/jekyllsitebuild:<tag>" .`
+
+**Important:** If developing a variant of this container, e.g. to add a new package, use a personal tag reference and then specify that tag when running the site building script, e.g.:
+
+`JEKYLLSITEBUILD="personaltag" ./build-site.sh`
+
+If you omit `<tag>`, Docker will default to tagging the container as `latest` which could cause confusion if testing local changes. For that reason, Linaro-provided versions of the jekyllsitebuild container will display the Bamboo build reference at the start of the scripts being run, e.g.:
+
+```
+Built by bamboo.linaro.org: CON-JBC-41
+...
+```
 
 Built containers can also be found on [Docker Hub](https://hub.docker.com/r/linaroits/jekyllsitebuild/tags/) for your convenience.
 
