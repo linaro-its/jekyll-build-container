@@ -25,7 +25,7 @@ Build the container in the usual way, e.g.
 If you omit `<tag>`, Docker will default to tagging the container as `latest` which could cause confusion if testing local changes. For that reason, Linaro-provided versions of the jekyllsitebuild container will display the Bamboo build reference at the start of the scripts being run, e.g.:
 
 ```
-Built by bamboo.linaro.org: CON-JBC-41
+Container built by bamboo.linaro.org: CON-JBC-JOB1-43 20190622-1009
 ...
 ```
 
