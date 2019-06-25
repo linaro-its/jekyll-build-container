@@ -77,6 +77,7 @@ ENV CONFIG_UPDATED 2018-08-10.1202
 COPY build-site.sh check-links-3.py /usr/local/bin/
 COPY bamboo-build.txt /usr/local/etc/
 RUN chmod a+rx /usr/local/bin/build-site.sh /usr/local/bin/check-links-3.py
+RUN chmod a+r /usr/local/etc/bamboo-build.txt
 
 WORKDIR /srv
 EXPOSE 4000
