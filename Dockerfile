@@ -79,25 +79,24 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
  /var/log/*
 ################################################################################
 
-# Changing VERSION in ARGs below will cause subsequent layers to be rebuilt
+# Changing ARG values below will cause subsequent layers to be rebuilt
 
-# Gems can be overridden per-site by website repo, e.g by dependencies of:
+################################################################################
+# Install Ruby Gem dependencies.
+# Ruby Gem versions can be overridden per-site by website repo, e.g by:
 # https://rubygems.org/gems/jumbo-jekyll-theme/versions/
+
+# Install Bundler
 ARG BUNDLER_GEM_VERSION=2.0.2
 ENV BUNDLER_GEM_VERSION ${BUNDLER_GEM_VERSION}
 LABEL Bundler=${BUNDLER_GEM_VERSION}
+RUN gem install --no-user-install bundler -v ${BUNDLER_GEM_VERSION}
 
-# Can be overridden per-site by website repo:
+# Install Jekyll
 ARG JEKYLL_GEM_VERSION=3.8.5
 ENV JEKYLL_GEM_VERSION ${JEKYLL_GEM_VERSION}
 LABEL Jekyll=${JEKYLL_GEM_VERSION}
-
-################################################################################
-# Install Bundler and Jekyll
-RUN gem install --no-user-install \
- bundler -v ${BUNDLER_GEM_VERSION}
-RUN gem install --no-user-install \
- jekyll -v ${JEKYLL_GEM_VERSION}
+RUN gem install --no-user-install jekyll -v ${JEKYLL_GEM_VERSION}
 ################################################################################
 
 WORKDIR /srv
