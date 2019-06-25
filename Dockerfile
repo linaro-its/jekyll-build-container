@@ -5,7 +5,6 @@
 ARG UBUNTU_VERSION=18.04
 FROM ubuntu:${UBUNTU_VERSION}
 
-# File Authors / Maintainers Initial Maintainer
 LABEL maintainer="it-services@linaro.org"
 
 ################################################################################
@@ -33,29 +32,21 @@ ENV LANG en_US.UTF-8
 ################################################################################
 
 ################################################################################
-# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
-ENV UNVERSIONED_PACKAGES \
+# Install unversioned dependency packages from Ubuntu repositories
+# See also: https://jekyllrb.com/docs/installation/
+ENV UNVERSIONED_DEPENDENCY_PACKAGES \
 # Required for callback plugin
  g++ \
  gcc \
  libc6-dev \
  make
-################################################################################
 
-ARG RUBY_PACKAGE_VERSION=2.5-dev
-# Make this easier to spot in the Docker image
-ENV RUBY_PACKAGE_VERSION ${RUBY_PACKAGE_VERSION}
-################################################################################
-# Install packages from Ubuntu repositories
-# Add update && upgrade to this layer in case we're rebuilding from here down
 RUN export DEBIAN_FRONTEND=noninteractive && \
  apt-get update && \
  apt-get upgrade -y && \
  apt-get install -y --no-install-recommends \
-# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
- ruby${RUBY_PACKAGE_VERSION} \
- ${UNVERSIONED_PACKAGES} \
-# Jekyll site extra prerequisites
+ ${UNVERSIONED_DEPENDENCY_PACKAGES} \
+# # Jekyll site extra prerequisites
 #  ruby-full \
 #  build-essential \
 #  zlib1g-dev \
@@ -68,6 +59,32 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 #  autoconf \
 # # Required by coffeescript
 #  nodejs \
+ && \
+ apt-get --purge autoremove -y && \
+ apt-get clean -y \
+ && \
+ rm -rf \
+ /tmp/* \
+ /var/cache/* \
+ /var/lib/apt/lists/* \
+ /var/log/*
+################################################################################
+
+################################################################################
+
+################################################################################
+# Install versioned dependency packages from Ubuntu repositories
+# Override for Dockerfile development with e.g:
+# `--build-arg RUBY_PACKAGE_VERSION=2.5`
+ARG RUBY_PACKAGE_VERSION=2.5-dev
+ENV RUBY_PACKAGE_VERSION ${RUBY_PACKAGE_VERSION}
+LABEL Ruby=ruby${RUBY_PACKAGE_VERSION}
+RUN export DEBIAN_FRONTEND=noninteractive && \
+ apt-get update && \
+ apt-get upgrade -y && \
+ apt-get install -y --no-install-recommends \
+# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
+ ruby${RUBY_PACKAGE_VERSION} \
  && \
  apt-get --purge autoremove -y && \
  apt-get clean -y \
