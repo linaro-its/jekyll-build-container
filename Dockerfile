@@ -93,28 +93,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 ################################################################################
 
 ################################################################################
-# Install versioned dependency packages from Ubuntu repositories
-# This is the last layer which will update Ubuntu packages
-# For hacking, override the Ruby package name with e.g:
-# `--build-arg RUBY_PACKAGE_VERSION=2.5`
-RUN export DEBIAN_FRONTEND=noninteractive && \
- apt-get update && \
- apt-get upgrade -y && \
- apt-get install -y --no-install-recommends \
-# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
- ruby-full \
- && \
- apt-get --purge autoremove -y && \
- apt-get clean -y \
- && \
- rm -rf \
- /tmp/* \
- /var/cache/* \
- /var/lib/apt/lists/* \
- /var/log/*
-################################################################################
-
-################################################################################
 # Install Ruby Gem dependencies.
 # Ruby Gem versions can be overridden per-site by website repo, e.g by:
 # https://rubygems.org/gems/jumbo-jekyll-theme/versions/
