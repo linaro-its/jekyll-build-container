@@ -120,8 +120,9 @@ RUN gem install --no-user-install jekyll -v ${JEKYLL_GEM_VERSION}
 # Install Linaro ITS build scripts
 COPY build-site.sh /usr/local/bin/
 COPY bamboo-build.txt /usr/local/etc/
+RUN chmod a+rx /usr/local/bin/build-site.sh
 RUN chmod a+r /usr/local/etc/bamboo-build.txt
 
 WORKDIR /srv
 EXPOSE 4000
-# CMD /bin/bash
+CMD /bin/bash

@@ -1,5 +1,13 @@
 #!/bin/bash
 #
+# If possible, show which container version this is
+if [ -f "/usr/local/etc/bamboo-build.txt" ]; then
+    value=$(</usr/local/etc/bamboo-build.txt)
+    if [ ! -z "$value" ]; then
+        echo "$value"
+    fi
+fi
+#
 # Check we've got defined vars
 if [ -z "$JEKYLL_CONFIG" ]; then
     echo "JEKYLL_CONFIG needs to be set"
@@ -64,6 +72,6 @@ echo "Building site"
 bundle exec jekyll \
  "$JEKYLL_ACTION" \
  "$HOSTING_OPTIONS" \
- --config "$JEKYLL_CONFIG"
-#  --config "$JEKYLL_CONFIG" \
-#  JEKYLL_ENV="$JEKYLL_ENV"
+ --trace \
+ --config "$JEKYLL_CONFIG" \
+ JEKYLL_ENV="$JEKYLL_ENV"
