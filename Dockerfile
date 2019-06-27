@@ -97,11 +97,16 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # Ruby Gem versions can be overridden per-site by website repo, e.g by:
 # https://rubygems.org/gems/jumbo-jekyll-theme/versions/
 
+# Set global options for `gem` commands
+COPY gemrc /etc/gemrc
+
 # Install Bundler
 ARG BUNDLER_GEM_VERSION=1.17.2
 ENV BUNDLER_GEM_VERSION ${BUNDLER_GEM_VERSION}
 LABEL Bundler=${BUNDLER_GEM_VERSION}
-RUN gem install --no-user-install bundler -v ${BUNDLER_GEM_VERSION}
+RUN gem install \
+ --no-user-install \
+ bundler -v ${BUNDLER_GEM_VERSION}
 
 # Install Jekyll
 # NB: Sass deprecation warning is currently expected. See
