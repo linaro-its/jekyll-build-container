@@ -9,10 +9,6 @@ if [ -f "/usr/local/etc/bamboo-build.txt" ]; then
 fi
 #
 # Check we've got defined vars
-if [ -z "$JEKYLL_CONFIG" ]; then
-    echo "JEKYLL_CONFIG needs to be set"
-    exit 1
-fi
 if [ -z "$JEKYLL_ENV" ]; then
     echo "JEKYLL_ENV needs to be set"
     exit 1
@@ -33,18 +29,10 @@ if [ ! -f "/srv/source/Gemfile" ]; then
     exit 1
 fi
 #
-# GEM_HOME in the container lives at /gems
-export GEM_HOME=/gems
-#
-# Make sure the gems directory exists
-if [ ! -d "$GEM_HOME" ]; then
-    mkdir "$GEM_HOME"
-fi
-#
 # Override $HOME to point at the volume-mounted directory. This is needed
 # because Bundle writes to a .bundle directory inside the user's home
 # directory.
-export HOME=/srv/home
+export HOME=/srv/source
 #
 # Default to building; allows override to serving.
 if [ -z "$JEKYLL_ACTION" ]; then
@@ -60,10 +48,7 @@ fi
 # where to find the Gemfile because Jekyll expects it to be in the
 # current directory.
 cd "/srv/source" || exit
-# Install the bundle
-echo "Installing gems"
-bundle install
 #
 # Build the site
 echo "Building site"
-bundle exec jekyll "$JEKYLL_ACTION" "$HOST" --trace --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
+bundle exec jekyll "$JEKYLL_ACTION" "$HOST" --trace --config "_config.yml,_config-$JEKYLL_ENV.yml" JEKYLL_ENV="$JEKYLL_ENV"
