@@ -110,6 +110,8 @@ LABEL Bundler=${BUNDLER_GEM_VERSION}
 RUN gem install --no-user-install bundler -v ${BUNDLER_GEM_VERSION}
 
 # Install Jekyll
+# NB: Sass deprecation warning is currently expected. See
+# https://talk.jekyllrb.com/t/do-i-need-to-update-sass/2509
 ARG JEKYLL_GEM_VERSION=3.8.5
 ENV JEKYLL_GEM_VERSION ${JEKYLL_GEM_VERSION}
 LABEL Jekyll=${JEKYLL_GEM_VERSION}
