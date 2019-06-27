@@ -40,7 +40,7 @@ ENV UNVERSIONED_DEPENDENCY_PACKAGES \
 # Required for callback plugin
  zlib1g-dev \
 # rmagick requires MagickWand libraries
-  libmagickwand-dev \
+ libmagickwand-dev \
 # Required when building webp images
  imagemagick \
  webp \
