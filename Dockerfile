@@ -39,26 +39,26 @@ ENV UNVERSIONED_DEPENDENCY_PACKAGES \
  g++ \
  gcc \
  libc6-dev \
- make
+ make \
+# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
+#  ruby-full \
+#  build-essential \
+ zlib1g-dev \
+# rmagick requires MagickWand libraries
+  libmagickwand-dev \
+# Required when building webp images
+ imagemagick \
+ webp \
+# Required when building nokogiri
+ autoconf \
+# Required by autofixer-rails
+ nodejs
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
  apt-get update && \
  apt-get upgrade -y && \
  apt-get install -y --no-install-recommends \
  ${UNVERSIONED_DEPENDENCY_PACKAGES} \
-# # Jekyll site extra prerequisites
-#  ruby-full \
-#  build-essential \
-#  zlib1g-dev \
-# # rmagick requires MagickWand libraries
-#  libmagickwand-dev \
-# # Required when building webp images
-#  imagemagick \
-#  webp \
-# # Required when building nokogiri
-#  autoconf \
-# # Required by coffeescript
-#  nodejs \
  && \
  apt-get --purge autoremove -y && \
  apt-get clean -y \
@@ -86,6 +86,29 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
  apt-get install -y --no-install-recommends \
 # Jekyll prerequisites, https://jekyllrb.com/docs/installation/
  ruby${RUBY_PACKAGE_VERSION} \
+ && \
+ apt-get --purge autoremove -y && \
+ apt-get clean -y \
+ && \
+ rm -rf \
+ /tmp/* \
+ /var/cache/* \
+ /var/lib/apt/lists/* \
+ /var/log/*
+################################################################################
+
+################################################################################
+# Install versioned dependency packages from Ubuntu repositories
+# This is the last layer which will update Ubuntu packages
+# For hacking, override the Ruby package name with e.g:
+# `--build-arg RUBY_PACKAGE_VERSION=2.5`
+RUN export DEBIAN_FRONTEND=noninteractive && \
+ apt-get update && \
+ apt-get upgrade -y && \
+ apt-get install -y --no-install-recommends \
+# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
+ ruby-full \
+ build-essential \
  && \
  apt-get --purge autoremove -y && \
  apt-get clean -y \
