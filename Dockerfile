@@ -35,14 +35,9 @@ ENV LANG en_US.UTF-8
 # Install unversioned dependency packages from Ubuntu repositories
 # See also: https://jekyllrb.com/docs/installation/
 ENV UNVERSIONED_DEPENDENCY_PACKAGES \
-# Required for callback plugin
- g++ \
- gcc \
- libc6-dev \
- make \
 # Jekyll prerequisites, https://jekyllrb.com/docs/installation/
-#  ruby-full \
-#  build-essential \
+ build-essential \
+# Required for callback plugin
  zlib1g-dev \
 # rmagick requires MagickWand libraries
   libmagickwand-dev \
