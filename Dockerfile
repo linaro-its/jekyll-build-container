@@ -35,7 +35,7 @@ ENV LANG en_US.UTF-8
 # Install unversioned dependency packages from Ubuntu repositories
 # See also: https://jekyllrb.com/docs/installation/
 ENV UNVERSIONED_DEPENDENCY_PACKAGES \
-# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
+# Jekyll prerequisites, except Ruby. https://jekyllrb.com/docs/installation/
  build-essential \
 # Required for callback plugin
  zlib1g-dev \
