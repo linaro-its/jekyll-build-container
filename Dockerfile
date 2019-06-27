@@ -105,7 +105,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # https://rubygems.org/gems/jumbo-jekyll-theme/versions/
 
 # Install Bundler
-ARG BUNDLER_GEM_VERSION=2.0.2
+ARG BUNDLER_GEM_VERSION=1.17.2
 ENV BUNDLER_GEM_VERSION ${BUNDLER_GEM_VERSION}
 LABEL Bundler=${BUNDLER_GEM_VERSION}
 RUN gem install --no-user-install bundler -v ${BUNDLER_GEM_VERSION}
