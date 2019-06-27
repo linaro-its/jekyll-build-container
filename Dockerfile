@@ -70,7 +70,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
  /var/log/*
 ################################################################################
 
-################################################################################
+# Changing ARG values below will cause subsequent layers to be rebuilt
 
 ################################################################################
 # Install versioned dependency packages from Ubuntu repositories
@@ -96,8 +96,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
  /var/lib/apt/lists/* \
  /var/log/*
 ################################################################################
-
-# Changing ARG values below will cause subsequent layers to be rebuilt
 
 ################################################################################
 # Install Ruby Gem dependencies.
