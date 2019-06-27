@@ -103,7 +103,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
  apt-get install -y --no-install-recommends \
 # Jekyll prerequisites, https://jekyllrb.com/docs/installation/
  ruby-full \
- build-essential \
  && \
  apt-get --purge autoremove -y && \
  apt-get clean -y \
