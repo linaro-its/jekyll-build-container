@@ -74,7 +74,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 ################################################################################
 # Install versioned dependency packages from Ubuntu repositories
-# Override for Dockerfile development with e.g:
+# This is the last layer which will update Ubuntu packages
+# For hacking, override the Ruby package name with e.g:
 # `--build-arg RUBY_PACKAGE_VERSION=2.5`
 ARG RUBY_PACKAGE_VERSION=2.5-dev
 ENV RUBY_PACKAGE_VERSION ${RUBY_PACKAGE_VERSION}
