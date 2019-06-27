@@ -46,11 +46,11 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 	nodejs \
 	&& \
 # Install Bundler
-	gem install --conservative bundler:1.17.2 \
+	gem install --no-ri --no-rdoc bundler:1.17.2 \
 	&& \
 # Some gems are getting preinstalled by ruby-full so we need to get them
-# upgraded before we go any further.
-	gem upgrade && \
+# updated before we go any further.
+	gem update && \
 	apt-get autoremove -y && \
 	apt-get clean -y
 
