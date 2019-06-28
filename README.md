@@ -25,11 +25,10 @@ Build the container in the usual way, e.g.
 If you omit `<tag>`, Docker will default to tagging the container as `latest` which could cause confusion if testing local changes. For that reason, Linaro-provided versions of the jekyllsitebuild container will display the Bamboo build reference at the start of the scripts being run, e.g.:
 
 ```
-Container built by bamboo.linaro.org: CON-JBC-JOB1-43 20190622-1009
+Container built by bamboo.linaro.org: CON-JBC-JOB1-43
 ...
 ```
 
-Built containers can also be found on [Docker Hub](https://hub.docker.com/r/linaroits/jekyllsitebuild/tags/) for your convenience.
+The script will now, if it has access to the Internet, check Docker Hub to see if the latest image is being used and warn if it isn't.
 
-### Assumptions
-Since Docker allows host directories to be volume-mounted into the container, this allows the scripts to be simplified because it is *assumed* that the source directory is mounted onto /srv/source and the output directory is mounted onto /srv/output.
+Built containers can also be found on [Docker Hub](https://hub.docker.com/r/linaroits/jekyllsitebuild/tags/) for your convenience.
