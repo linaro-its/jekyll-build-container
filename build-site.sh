@@ -34,26 +34,29 @@ if [ ! -f "/srv/source/Gemfile" ]; then
 fi
 #
 # GEM_HOME in the container lives at /gems
-export GEM_HOME=/gems
+GEM_HOME=/gems
+export GEM_HOME
 #
 # Make sure the gems directory exists
 if [ ! -d "$GEM_HOME" ]; then
-    mkdir "$GEM_HOME"
+    mkdir -p "$GEM_HOME"
 fi
 #
 # Override $HOME to point at the volume-mounted directory. This is needed
 # because Bundle writes to a .bundle directory inside the user's home
 # directory.
-export HOME=/srv/home
+HOME=/srv
+export HOME
 #
 # Default to building; allows override to serving.
 if [ -z "$JEKYLL_ACTION" ]; then
-    export JEKYLL_ACTION="build"
+    JEKYLL_ACTION="build"
+    export JEKYLL_ACTION
 fi
 if [ "$JEKYLL_ACTION" == "serve" ]; then
-    HOST="-H0.0.0.0"
+    HOSTING_OPTIONS="-H0.0.0.0"
 else
-    HOST=""
+    HOSTING_OPTIONS=""
 fi
 #
 # Change to the source directory rather than telling "bundle install"
@@ -66,4 +69,9 @@ bundle install
 #
 # Build the site
 echo "Building site"
-bundle exec jekyll "$JEKYLL_ACTION" "$HOST" --trace --config "$JEKYLL_CONFIG" JEKYLL_ENV="$JEKYLL_ENV"
+bundle exec jekyll \
+ "$JEKYLL_ACTION" \
+ "$HOSTING_OPTIONS" \
+ --trace \
+ --config "$JEKYLL_CONFIG" \
+ JEKYLL_ENV="$JEKYLL_ENV"

@@ -1,25 +1,30 @@
 # Core tools for building Linaro's static web sites.
 
-# Set the base image to Ubuntu (version 18.04)
-# Uses the new "ubuntu-minimal" image
-# Should be Alpine like all the cool kids, but
-FROM ubuntu:18.04
+# Set the base image to Ubuntu (version 18.04) Uses the new "ubuntu-minimal"
+# image Should be Alpine like all the cool kids, but
+ARG UBUNTU_VERSION=18.04
+FROM ubuntu:${UBUNTU_VERSION}
 
-# File Authors / Maintainers
-# Initial Maintainer
 LABEL maintainer="it-services@linaro.org"
 
 ################################################################################
+# Install locale packages from Ubuntu repositories and set locale
 RUN export DEBIAN_FRONTEND=noninteractive && \
-	apt-get clean -y && \
-	apt-get update && \
-	apt-get install apt-utils -y && \
-	apt-get upgrade -y && \
-	apt-get install -y language-pack-en && \
-	locale-gen en_US.UTF-8 && \
-	dpkg-reconfigure locales && \
-	apt-get --purge autoremove -y && \
-	apt-get clean -y
+ apt-get clean -y && \
+ apt-get update && \
+ apt-get install apt-utils -y && \
+ apt-get upgrade -y && \
+ apt-get install -y language-pack-en && \
+ locale-gen en_US.UTF-8 && \
+ dpkg-reconfigure locales && \
+ apt-get --purge autoremove -y && \
+ apt-get clean -y \
+ && \
+ rm -rf \
+ /tmp/* \
+ /var/cache/* \
+ /var/lib/apt/lists/* \
+ /var/log/*
 
 # Set the defaults
 ENV LC_ALL en_US.UTF-8
@@ -27,56 +32,95 @@ ENV LANG en_US.UTF-8
 ################################################################################
 
 ################################################################################
-# Install latest software
-# Change the date time stamp if you want to rebuild the image from this point down
-# Useful for Dockerfile development
-ENV SOFTWARE_UPDATED 2018-08-10.1202
-
-# Install packages
-# Add update && upgrade to this layer in case we're rebuilding from here down
-RUN export DEBIAN_FRONTEND=noninteractive && \
-	apt-get update && \
-	apt-get upgrade -y && \
-	apt-get install -y --no-install-recommends \
-# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
-	ruby-full \
-	build-essential \
-	zlib1g-dev \
+# Install unversioned dependency packages from Ubuntu repositories
+# See also: https://jekyllrb.com/docs/installation/
+ENV UNVERSIONED_DEPENDENCY_PACKAGES \
+# Jekyll prerequisites, except Ruby. https://jekyllrb.com/docs/installation/
+ build-essential \
+# Required for callback plugin
+ zlib1g-dev \
 # rmagick requires MagickWand libraries
- 	libmagickwand-dev \
+ libmagickwand-dev \
 # Required when building webp images
-	imagemagick \
-	webp \
+ imagemagick \
+ webp \
 # Required when building nokogiri
-	autoconf \
+ autoconf \
 # Required by autofixer-rails
-	nodejs \
-# Required for Python package installation
-	python3-pip \
-	python3-setuptools && \
-# Install Python packages used by the link checker
-	pip3 install wheel && \
-	pip3 install \
-	bs4 \
-	aiohttp && \
+ nodejs
+
+RUN export DEBIAN_FRONTEND=noninteractive && \
+ apt-get update && \
+ apt-get upgrade -y && \
+ apt-get install -y --no-install-recommends \
+ ${UNVERSIONED_DEPENDENCY_PACKAGES} \
+ && \
+ apt-get --purge autoremove -y && \
+ apt-get clean -y \
+ && \
+ rm -rf \
+ /tmp/* \
+ /var/cache/* \
+ /var/lib/apt/lists/* \
+ /var/log/*
+################################################################################
+
+# Changing ARG values below will cause subsequent layers to be rebuilt
+
+################################################################################
+# Install versioned dependency packages from Ubuntu repositories
+# This is the last layer which will update Ubuntu packages
+# For hacking, override the Ruby package name with e.g:
+# `--build-arg RUBY_PACKAGE_VERSION=2.5`
+ARG RUBY_PACKAGE_VERSION=2.5-dev
+ENV RUBY_PACKAGE_VERSION ${RUBY_PACKAGE_VERSION}
+LABEL Ruby=ruby${RUBY_PACKAGE_VERSION}
+RUN export DEBIAN_FRONTEND=noninteractive && \
+ apt-get update && \
+ apt-get upgrade -y && \
+ apt-get install -y --no-install-recommends \
+# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
+ ruby${RUBY_PACKAGE_VERSION} \
+ && \
+ apt-get --purge autoremove -y && \
+ apt-get clean -y \
+ && \
+ rm -rf \
+ /tmp/* \
+ /var/cache/* \
+ /var/lib/apt/lists/* \
+ /var/log/*
+################################################################################
+
+################################################################################
+# Install Ruby Gem dependencies.
+# Ruby Gem versions can be overridden per-site by website repo, e.g by:
+# https://rubygems.org/gems/jumbo-jekyll-theme/versions/
+
+# Set global options for `gem` commands
+COPY gemrc /etc/gemrc
+
 # Install Bundler
+ARG BUNDLER_GEM_VERSION=1.17.2
+ENV BUNDLER_GEM_VERSION ${BUNDLER_GEM_VERSION}
+LABEL Bundler=${BUNDLER_GEM_VERSION}
+RUN gem install \
+ --no-user-install \
+ bundler -v ${BUNDLER_GEM_VERSION}
+
+# Install Jekyll
 # NB: Sass deprecation warning is currently expected. See
-#     https://talk.jekyllrb.com/t/do-i-need-to-update-sass/2509
-	gem install --conservative \
-	bundler:1.17.2 \
-	jekyll && \
-	apt-get --purge autoremove -y && \
-	apt-get clean -y
+# https://talk.jekyllrb.com/t/do-i-need-to-update-sass/2509
+ARG JEKYLL_GEM_VERSION=3.8.5
+ENV JEKYLL_GEM_VERSION ${JEKYLL_GEM_VERSION}
+LABEL Jekyll=${JEKYLL_GEM_VERSION}
+RUN gem install --no-user-install jekyll -v ${JEKYLL_GEM_VERSION}
 ################################################################################
 
-################################################################################
-# Dockerfile development only
-ENV CONFIG_UPDATED 2018-08-10.1202
-################################################################################
-
-COPY build-site.sh check-links-3.py /usr/local/bin/
+# Install Linaro ITS build scripts
+COPY build-site.sh /usr/local/bin/
 COPY bamboo-build.txt /usr/local/etc/
-RUN chmod a+rx /usr/local/bin/build-site.sh /usr/local/bin/check-links-3.py
+RUN chmod a+rx /usr/local/bin/build-site.sh
 RUN chmod a+r /usr/local/etc/bamboo-build.txt
 
 WORKDIR /srv
