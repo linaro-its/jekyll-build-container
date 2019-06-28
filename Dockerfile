@@ -8,6 +8,7 @@ FROM ubuntu:${UBUNTU_VERSION}
 LABEL maintainer="it-services@linaro.org"
 
 ################################################################################
+# Install locale packages from Ubuntu repositories and set locale
 RUN export DEBIAN_FRONTEND=noninteractive && \
  apt-get clean -y && \
  apt-get update && \
@@ -65,7 +66,6 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
  /var/cache/* \
  /var/lib/apt/lists/* \
  /var/log/*
-
 ################################################################################
 
 # Changing ARG values below will cause subsequent layers to be rebuilt
