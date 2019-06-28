@@ -8,7 +8,7 @@ FROM ubuntu:${UBUNTU_VERSION}
 LABEL maintainer="it-services@linaro.org"
 
 ################################################################################
-# Install locale packages from Ubuntu repositories and set locale
+# Install locale packages from Ubuntu repositories and set locale.
 RUN export DEBIAN_FRONTEND=noninteractive && \
  apt-get clean -y && \
  apt-get update && \
@@ -32,24 +32,24 @@ ENV LANG en_US.UTF-8
 
 ################################################################################
 
-# Install unversioned dependency packages from Ubuntu repositories
-# See also: https://jekyllrb.com/docs/installation/
+# Install unversioned dependency packages from Ubuntu repositories.
+# See also: https://jekyllrb.com/docs/installation/.
 ENV UNVERSIONED_DEPENDENCY_PACKAGES \
-# Needed by the build-site script to determine if this is the latest container
+# Needed by the build-site script to determine if this is the latest container.
  curl \
  jq \
 # Jekyll prerequisites, except Ruby. https://jekyllrb.com/docs/installation/
  build-essential \
-# Required for callback plugin
+# Required for callback plugin.
  zlib1g-dev \
-# rmagick requires MagickWand libraries
+# rmagick requires MagickWand libraries.
  libmagickwand-dev \
-# Required when building webp images
+# Required when building webp images.
  imagemagick \
  webp \
-# Required when building nokogiri
+# Required when building nokogiri.
  autoconf \
-# Required by autofixer-rails
+# Required by autofixer-rails.
  nodejs
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
@@ -68,11 +68,11 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
  /var/log/*
 ################################################################################
 
-# Changing ARG values below will cause subsequent layers to be rebuilt
+# Changing ARG values below will cause subsequent layers to be rebuilt.
 
 ################################################################################
-# Install versioned dependency packages from Ubuntu repositories
-# This is the last layer which will update Ubuntu packages
+# Install versioned dependency packages from Ubuntu repositories.
+# This is the last layer which will update Ubuntu packages.
 # For hacking, override the Ruby package name with e.g:
 # `--build-arg RUBY_PACKAGE_VERSION=2.5`
 ARG RUBY_PACKAGE_VERSION=2.5-dev
@@ -83,7 +83,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
  apt-get update && \
  apt-get upgrade -y && \
  apt-get install -y --no-install-recommends \
-# Jekyll prerequisites, https://jekyllrb.com/docs/installation/
+# Jekyll prerequisites, https://jekyllrb.com/docs/installation/.
  ruby${RUBY_PACKAGE_VERSION} \
  && \
  apt-get --purge autoremove -y && \
@@ -97,17 +97,17 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 
 ################################################################################
 
-# Bundler specification
+# Bundler specification.
 ARG BUNDLER_GEM_VERSION=1.17.2
 ENV BUNDLER_GEM_VERSION ${BUNDLER_GEM_VERSION}
 LABEL Bundler=${BUNDLER_GEM_VERSION}
 
-# Rake specification (otherwise some of the required gems below won't install)
+# Rake specification (otherwise some of the required gems below won't install).
 ARG RAKE_GEM_VERSION=12.3.2
 ENV RAKE_GEM_VERSION ${RAKE_GEM_VERSION}
 LABEL Rake=${RAKE_GEM_VERSION}
 
-# and install into a single layer
+# Install the above gems into a single layer.
 RUN gem install --no-document \
  bundler:${BUNDLER_GEM_VERSION} \
  rake:${RAKE_GEM_VERSION}
@@ -140,7 +140,7 @@ RUN gem install --no-document \
 
 ################################################################################
 
-# Install Linaro ITS build scripts
+# Install Linaro ITS build scripts.
 COPY build-site.sh /usr/local/bin/
 COPY bamboo-build.txt /usr/local/etc/
 RUN chmod a+rx /usr/local/bin/build-site.sh
