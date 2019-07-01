@@ -92,5 +92,5 @@ bundle exec jekyll \
  "$JEKYLL_ACTION" \
  "$HOSTING_OPTIONS" \
  --trace \
- --config "$JEKYLL_CONFIG" \
+ --config "_config.yml,_config-$JEKYLL_ENV.yml" \
  JEKYLL_ENV="$JEKYLL_ENV"
