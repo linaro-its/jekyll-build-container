@@ -28,18 +28,15 @@ function get_tag_for_latest(){
 
 #
 # If possible, show which container version this is
-if [ -f "/usr/local/etc/bamboo-build.txt" ]; then
-    value=$(</usr/local/etc/bamboo-build.txt)
-    if [ ! -z "$value" ]; then
-        echo "Container built by bamboo.linaro.org: $value"
-        get_tag_for_latest || LATEST_ALIAS=""
-        if [ ! -z "$LATEST_ALIAS" ] && [ "$LATEST_ALIAS" != "$value" ]; then
-            echo "***************************************************************"
-            echo "WARNING! This does not appear to be the latest Docker image."
-            echo "If the build fails, please 'git pull linaroits/jekyllsitebuild'"
-            echo "and try again."
-            echo "***************************************************************"
-        fi
+if [ ! -z "${BAMBOO_BUILD}" ]; then
+    echo "Container built by bamboo.linaro.org: ${BAMBOO_BUILD}"
+    get_tag_for_latest || LATEST_ALIAS=""
+    if [ ! -z "$LATEST_ALIAS" ] && [ "$LATEST_ALIAS" != "${BAMBOO_BUILD}" ]; then
+        echo "***************************************************************"
+        echo "WARNING! This does not appear to be the latest Docker image."
+        echo "If the build fails, please 'git pull linaroits/jekyllsitebuild'"
+        echo "and try again."
+        echo "***************************************************************"
     fi
 fi
 #
