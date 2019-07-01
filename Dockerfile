@@ -102,23 +102,43 @@ ENV RUBY_GEMS \
  bundler:1.17.2 \
  # Newer version to ensure later gem installation
  rake:12.3.2 \
+ #
  # Gems required across the web sites. Please comment to ensure everyone knows
- # which gem is used by which web site.
+ # which gem is used by which web site. If you are removing a web site as a user
+ # of a gem and it is the last site using that gem, please remove the gem!
+ #
+ # Used by linaro.org, connect, lkft, ai, ArmNN, devicetree, OP-TEE,
+ # TrustedFirmware, cloud
  jekyll-data:1.0.0 \
+ # Used by connect, cloud
  jekyll-include-cache:0.2.0 \
+ # Used by devicetree
  jekyll-minimagick:0.0.4 \
+ # Used by ?
  jekyll-relative-links:0.6.0 \
+ # Used by connect, cloud
  jekyll-responsive-image:1.5.2 \
+ # Used by ?
  jekyll-titles-from-headings:0.5.1 \
+ # Used by ?
  jumbo-jekyll-theme:3.9.4 \
+ # Used by ArmNN
  jumbo-jekyll-theme:4.4.4 \
+ # Used by clouc
  jumbo-jekyll-theme:4.4.9 \
+ # Used by devicetree, TrustedFirmware
  jumbo-jekyll-theme:4.5.0 \
+ # Used by OP-TEE
  jumbo-jekyll-theme:4.7.6 \
+ # Used by linaro.org
  jumbo-jekyll-theme:4.7.7 \
+ # Used by connect, ai
  jumbo-jekyll-theme:5.3.4 \
+ # Used by devicetree, OP-TEE
  mini_magick:4.9.3 \
+ # Used by linaro.org, connect, cloud
  nokogiri:1.10.3 \
+ # Used by lkft
  seriously_simple_static_starter:0.5.0
 LABEL org.linaro.gems=${RUBY_GEMS}
 
