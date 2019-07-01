@@ -126,12 +126,10 @@ RUN gem install --no-document \
  ${RUBY_GEMS}
 
 ################################################################################
-# Install Linaro ITS build scripts.
+# Install Linaro ITS build script.
 
 COPY build-site.sh /usr/local/bin/
-COPY bamboo-build.txt /usr/local/etc/
 RUN chmod a+rx /usr/local/bin/build-site.sh
-RUN chmod a+r /usr/local/etc/bamboo-build.txt
 
 ################################################################################
 # Record the Bamboo build job (if specified as an argument)
