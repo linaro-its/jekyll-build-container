@@ -1,7 +1,7 @@
 # jekyll-build-container
 A Docker container used by Linaro's web site build process.
 
-The container isolates the building of Linaro's Jekyll-based web sites. This avoids needing to install directly on the host the numerous packages used when building the sites.
+The container isolates the building of Linaro's Jekyll-based web sites. This avoids needing to install directly on the host the numerous packages used when building the sites. The container includes all of the Ruby gems used across the web sites, which is why it is critical that changes made to Gemfiles in any of the website repositories must be matched with a corresponding change to the gems referenced in the Dockerfile. Failure to do so could result in build failure on Linaro's Bamboo build service.
 
 In addition to the notes below, more documentation can be found on the [wiki](https://github.com/linaro-its/jekyll-build-container/wiki).
 
