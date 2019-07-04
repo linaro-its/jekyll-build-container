@@ -91,6 +91,7 @@ echo "Building site"
 bundle exec jekyll \
  "$JEKYLL_ACTION" \
  "$HOSTING_OPTIONS" \
+ --strict \
  --trace \
  --config "_config.yml,_config-$JEKYLL_ENV.yml" \
  JEKYLL_ENV="$JEKYLL_ENV"
