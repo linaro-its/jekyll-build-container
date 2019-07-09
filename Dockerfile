@@ -156,3 +156,6 @@ ENV BAMBOO_BUILD=${bamboo_build}
 
 WORKDIR /srv
 EXPOSE 4000
+
+ENTRYPOINT ["/usr/local/bin/build-site.sh"]
+CMD []
