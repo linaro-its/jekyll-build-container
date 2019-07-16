@@ -120,6 +120,8 @@ ENV RUBY_GEMS \
  jekyll-responsive-image:1.5.2 \
  # Used by ?
  jekyll-titles-from-headings:0.5.1 \
+ # Used by LKFT master branch
+ jumbo-jekyll-theme:1.4.4 \
  # Used by ?
  jumbo-jekyll-theme:3.9.4 \
  # Used by ArmNN
