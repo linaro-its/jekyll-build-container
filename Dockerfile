@@ -110,34 +110,34 @@ ENV RUBY_GEMS \
  # Used by linaro.org, connect, lkft, ai, ArmNN, devicetree, OP-TEE,
  # TrustedFirmware, cloud
  jekyll-data:1.0.0 \
- # Used by connect, cloud
+ # Used by connect.linaro.org, linaro.cloud
  jekyll-include-cache:0.2.0 \
- # Used by devicetree
+ # Used by devicetree.org
  jekyll-minimagick:0.0.4 \
  # Used by ?
  jekyll-relative-links:0.6.0 \
- # Used by connect, cloud
+ # Used by connect.linaro.org, linaro.cloud
  jekyll-responsive-image:1.5.2 \
  # Used by ?
  jekyll-titles-from-headings:0.5.1 \
- # Used by LKFT master branch
+ # Used by lkft.linaro.org
  jumbo-jekyll-theme:1.4.4 \
- # Used by ?
+ # Used by 96boards.ai
  jumbo-jekyll-theme:3.9.4 \
  # Used by staging.linaro.org
  jumbo-jekyll-theme:5.5.4 \
- # Used by ai
+ # Used by staging.96boards.ai
  jumbo-jekyll-theme:5.3.4 \
  # Used by 96boards.org
  jumbo-jekyll-theme:5.5.3
  # Used by op-tee.org, linaro.cloud, linaro.org, devicetree.org,
  # connect.linaro.org, trustedfirmware.org, mlplatform.org
  jumbo-jekyll-theme:5.5.1 \
- # Used by devicetree, OP-TEE
+ # Used by devicetree.org, op-tee.org
  mini_magick:4.9.3 \
  # Used by linaro.org, connect, cloud
  nokogiri:1.10.3 \
- # Used by lkft
+ # Used by staging.lkft.linaro.org
  seriously_simple_static_starter:0.5.0
 LABEL org.linaro.gems=${RUBY_GEMS}
 
