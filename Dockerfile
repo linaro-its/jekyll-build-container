@@ -124,15 +124,14 @@ ENV RUBY_GEMS \
  jumbo-jekyll-theme:1.4.4 \
  # Used by ?
  jumbo-jekyll-theme:3.9.4 \
- # Used by ArmNN
- jumbo-jekyll-theme:4.4.4 \
- # Used by devicetree, TrustedFirmware
- jumbo-jekyll-theme:4.5.0 \
- # Used by linaro.org
- jumbo-jekyll-theme:4.7.7 \
- # Used by connect, ai
+ # Used by staging.linaro.org
+ jumbo-jekyll-theme:5.5.4 \
+ # Used by ai
  jumbo-jekyll-theme:5.3.4 \
- # Used by OP-TEE, Linaro.cloud
+ # Used by 96boards.org
+ jumbo-jekyll-theme:5.5.3
+ # Used by op-tee.org, linaro.cloud, linaro.org, devicetree.org,
+ # connect.linaro.org, trustedfirmware.org, mlplatform.org
  jumbo-jekyll-theme:5.5.1 \
  # Used by devicetree, OP-TEE
  mini_magick:4.9.3 \
