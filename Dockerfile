@@ -130,12 +130,12 @@ ENV RUBY_GEMS \
  jumbo-jekyll-theme:5.3.4 \
  # Used by 96boards.org
  jumbo-jekyll-theme:5.5.3
- # Used by op-tee.org, linaro.cloud, linaro.org, devicetree.org,
- # connect.linaro.org, trustedfirmware.org, mlplatform.org
+ # Used by connect.linaro.org, devicetree.org, linaro.cloud, linaro.org,
+ # mlplatform.org, op-tee.org, trustedfirmware.org,
  jumbo-jekyll-theme:5.5.1 \
  # Used by devicetree.org, op-tee.org
  mini_magick:4.9.3 \
- # Used by linaro.org, connect, cloud
+ # Used by connect.linaro.org, linaro.cloud, linaro.org
  nokogiri:1.10.3 \
  # Used by staging.lkft.linaro.org
  seriously_simple_static_starter:0.5.0
