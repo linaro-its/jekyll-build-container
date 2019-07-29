@@ -107,8 +107,8 @@ ENV RUBY_GEMS \
  # which gem is used by which web site. If you are removing a web site as a user
  # of a gem and it is the last site using that gem, please remove the gem!
  #
- # Used by linaro.org, connect, lkft, ai, ArmNN, devicetree, OP-TEE,
- # TrustedFirmware, cloud
+ # Used by 96boards.ai, 96boards.org, connect.linaro.org, devicetree.org, linaro.cloud, linaro.org,
+ # lkft.linaro.org, mlplatform.org, op-tee.org, trustedfirmware.org
  jekyll-data:1.0.0 \
  # Used by connect.linaro.org, linaro.cloud
  jekyll-include-cache:0.2.0 \
