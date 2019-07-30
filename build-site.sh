@@ -95,5 +95,5 @@ bundle exec jekyll \
  --strict_front_matter \
  --trace \
  --config "_config.yml,_config-$JEKYLL_ENV.yml" \
- "$@"
+ "$@" \
  JEKYLL_ENV="$JEKYLL_ENV"
