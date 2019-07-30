@@ -107,38 +107,37 @@ ENV RUBY_GEMS \
  # which gem is used by which web site. If you are removing a web site as a user
  # of a gem and it is the last site using that gem, please remove the gem!
  #
- # Used by linaro.org, connect, lkft, ai, ArmNN, devicetree, OP-TEE,
- # TrustedFirmware, cloud
+ # Used by 96boards.ai, 96boards.org, connect.linaro.org, devicetree.org, linaro.cloud, linaro.org,
+ # lkft.linaro.org, mlplatform.org, op-tee.org, trustedfirmware.org
  jekyll-data:1.0.0 \
- # Used by connect, cloud
+ # Used by connect.linaro.org, linaro.cloud
  jekyll-include-cache:0.2.0 \
- # Used by devicetree
+ # Used by devicetree.org
  jekyll-minimagick:0.0.4 \
  # Used by ?
  jekyll-relative-links:0.6.0 \
- # Used by connect, cloud
+ # Used by connect.linaro.org, linaro.cloud
  jekyll-responsive-image:1.5.2 \
  # Used by ?
  jekyll-titles-from-headings:0.5.1 \
- # Used by LKFT master branch
+ # Used by lkft.linaro.org
  jumbo-jekyll-theme:1.4.4 \
- # Used by ?
+ # Used by 96boards.ai
  jumbo-jekyll-theme:3.9.4 \
- # Used by ArmNN
- jumbo-jekyll-theme:4.4.4 \
- # Used by devicetree, TrustedFirmware
- jumbo-jekyll-theme:4.5.0 \
- # Used by linaro.org
- jumbo-jekyll-theme:4.7.7 \
- # Used by connect, ai
+ # Used by staging.linaro.org
+ jumbo-jekyll-theme:5.5.4 \
+ # Used by staging.96boards.ai
  jumbo-jekyll-theme:5.3.4 \
- # Used by OP-TEE, Linaro.cloud
+ # Used by 96boards.org
+ jumbo-jekyll-theme:5.5.3 \
+ # Used by connect.linaro.org, devicetree.org, linaro.cloud, linaro.org,
+ # mlplatform.org, op-tee.org, trustedfirmware.org,
  jumbo-jekyll-theme:5.5.1 \
- # Used by devicetree, OP-TEE
+ # Used by devicetree.org, op-tee.org
  mini_magick:4.9.3 \
- # Used by linaro.org, connect, cloud
+ # Used by connect.linaro.org, linaro.cloud, linaro.org
  nokogiri:1.10.3 \
- # Used by lkft
+ # Used by staging.lkft.linaro.org
  seriously_simple_static_starter:0.5.0
 LABEL org.linaro.gems=${RUBY_GEMS}
 
