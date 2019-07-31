@@ -87,6 +87,15 @@ if [ -f "Gemfile.lock" ]; then
     rm Gemfile.lock
 fi
 #
+# Validate the source material before trying to build the site
+echo "Validating source files"
+bundle exec jekyll doctor \
+ --config "_config.yml,_config-$JEKYLL_ENV.yml" \
+ JEKYLL_ENV="$JEKYLL_ENV"
+#
+# ^^^ returns a non-zero code in the event of an error so we then
+#     don't go any further.
+#
 # Build the site
 echo "Building site"
 bundle exec jekyll \
