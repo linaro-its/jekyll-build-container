@@ -16,7 +16,7 @@ function get_tag_for_latest(){
     # get image digest for target
     TARGET_DIGEST=$(curl -s -D - -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" https://index.docker.io/v2/$REPOSITORY/manifests/$TARGET_TAG | grep Docker-Content-Digest | cut -d ' ' -f 2) || return $?
     # for each tags
-    for tag in ${ALL_TAGS[@]}; do
+    for tag in "${ALL_TAGS[@]}"; do
         # get image digest
         digest=$(curl -s -D - -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" https://index.docker.io/v2/$REPOSITORY/manifests/$tag | grep Docker-Content-Digest | cut -d ' ' -f 2) || return $?
         # check digest
@@ -92,6 +92,10 @@ echo "Validating source files"
 bundle exec jekyll doctor \
  --config "_config.yml,_config-$JEKYLL_ENV.yml" \
  JEKYLL_ENV="$JEKYLL_ENV"
+result=$?
+if [ $result -ne 0 ]; then
+    exit $result
+fi
 #
 # ^^^ returns a non-zero code in the event of an error so we then
 #     don't go any further.
