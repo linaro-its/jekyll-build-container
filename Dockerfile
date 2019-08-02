@@ -37,6 +37,9 @@ ENV UNVERSIONED_DEPENDENCY_PACKAGES \
  # Needed by the build-site script to determine if this is the latest container.
  curl \
  jq \
+ # Needed by the build-site script to copy stuff and retrieve repos.
+ rsync \
+ git \
  # Jekyll prerequisites, except Ruby. https://jekyllrb.com/docs/installation/
  build-essential \
  # Required for callback plugin.
@@ -120,6 +123,8 @@ ENV RUBY_GEMS \
  jekyll-responsive-image:1.5.2 \
  # Used by ?
  jekyll-titles-from-headings:0.5.1 \
+ # Used by 96boards.org
+ jekyll-toc:0.12.1 \
  # Used by lkft.linaro.org
  jumbo-jekyll-theme:1.4.4 \
  # Used by 96boards.ai
