@@ -124,10 +124,10 @@ ENV RUBY_GEMS \
  jumbo-jekyll-theme:1.4.4 \
  # Used by 96boards.ai
  jumbo-jekyll-theme:3.9.4 \
- # Used by staging.linaro.org
- jumbo-jekyll-theme:5.5.4 \
  # Used by staging.96boards.ai
  jumbo-jekyll-theme:5.3.4 \
+ # Used by staging.connect.linaro.org
+ jumbo-jekyll-theme:5.6.3 \
  # Used by 96boards.org
  jumbo-jekyll-theme:5.5.3 \
  # Used by connect.linaro.org, devicetree.org, linaro.cloud, linaro.org,
