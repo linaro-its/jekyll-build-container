@@ -7,6 +7,16 @@
 # because Bundle writes to a .bundle directory inside the user's home
 # directory.
 export HOME=/srv/source
+#
+# Define where we are looking for the multi-site manifest file.
+MANIFEST_FILE=/srv/source/manifest.json
+
+# Define some colours
+# (https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux)
+RED='\033[1;31m'
+GREEN='\033[1;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
 
 # Functions
 get_tag_for_latest() {
@@ -53,11 +63,11 @@ check_container_version() {
 # Check we've got defined vars
 check_environment_variables() {
     if [ -z "$JEKYLL_ENV" ]; then
-        echo "JEKYLL_ENV needs to be set"
+        echo -e "${RED}JEKYLL_ENV needs to be set${NC}"
         exit 1
     fi
     if [ "$JEKYLL_ENV" != "staging" ] && [ "$JEKYLL_ENV" != "production" ]; then
-        echo "JEKYLL_ENV must be set to 'staging' or 'production'"
+        echo -e "${RED}JEKYLL_ENV must be set to 'staging' or 'production'${NC}"
         exit 1
     fi
 }
@@ -66,7 +76,7 @@ check_environment_variables() {
 # source directory.
 check_source_dir() {
     if [ ! -d "/srv/source" ]; then
-        echo "Cannot find source directory"
+        echo -e "${RED}Cannot find source directory${NC}"
         exit 1
     fi
     # Initialise the source location. This will get changed if we have a
@@ -91,7 +101,7 @@ get_repo_url() {
     #
     # If no colon, we've fowled up somewhere.
     if [ "${#SPLIT[@]}" != "2" ]; then
-        echo "Failed to retrieve Git URL from $1"
+        echo -e "${RED}Failed to retrieve Git URL from $1${NC}"
         exit 1
     fi
     if [ "${SPLIT[0]}" == "https" ]; then
@@ -110,10 +120,10 @@ check_srv_source() {
     fi
     echo "Copying repo files into $3"
     # Build the destination path and make sure it exists. Note that
-    # the manifest paths always start with /
+    # the paths read from the manifest file always start with /
     dest_path="/srv/source/merged_sources$3"
     mkdir -p "$dest_path" || exit 1
-    rsync -ar --exclude ".git" --exclude "merged_sources" /srv/source/ "$dest_path" || exit 1
+    rsync -r "${RSYNC_EXCLUDE[@]}" /srv/source/ "$dest_path" || exit 1
 }
 
 # If /srv/<varname> (where varname is $1) exists and matches the repository
@@ -125,12 +135,12 @@ check_srv_varname() {
             # Not this repo
             return 1
         fi
+        echo "Copying $1 repo files into $3"
         # Build the destination path and make sure it exists. Note that
-        # the manifest paths always start with /
+        # the paths read from the manifest file always start with /
         dest_path="/srv/source/merged_sources$3"
         mkdir -p "$dest_path" || exit 1
-        echo "Copying $1 repo files into $3"
-        cp -r "/srv/$1"/* "$dest_path" || exit 1
+        rsync -r "${RSYNC_EXCLUDE[@]}" "/srv/$1"/ "$dest_path" || exit 1
     else
         # Show that this failed
         return 1
@@ -145,7 +155,9 @@ clone_missing_repo() {
     echo "Cloning $2"
     git clone --quiet "$2" "$temp_dir" || exit 1
     echo "Copying repo files into $3"
-    cp -r "$temp_dir"/* "/srv/source/merged_sources$3" || exit 1
+    dest_path="/srv/source/merged_sources$3"
+    mkdir -p "$dest_path" || exit 1
+    cp -r "$temp_dir"/* "$dest_path" || exit 1
     rm -rf "$temp_dir" || exit 1
 }
 
@@ -173,7 +185,7 @@ process_single_repo() {
     # can't return values other than an exit code. Anything else
     # needs to be returned in variables.
 
-    echo "$1: $2"
+    echo -e "${GREEN}$1:${NC} $2"
 
     check_srv_source "$1" "$2" "$3" || \
     check_srv_varname "$1" "$2" "$3" || \
@@ -194,19 +206,44 @@ process_repos() {
     # if [ -d "/srv/source/merged_sources" ]; then
     #     rm -r /srv/source/merged_sources
     # fi
-    # Iterate through the manifest and process each repo in turn.
-    while IFS=, read -r varname giturl dirpath
+
+    # Get the possible built site directory names from the manifest and
+    # build a rsync exclusion "command". Use an array so that the elements
+    # get correctly expanded when rsync is called.
+    declare -a RSYNC_EXCLUDE
+    # Don't copy anything dotted (e.g. .git, .asset-cache).
+    # Don't copy any scripts.
+    RSYNC_EXCLUDE=(--exclude ".*" --exclude "*.sh")
+    RSYNC_EXCLUDE+=(--exclude "merged_sources" --exclude "CODEOWNERS" --exclude "manifest.json")
+    dirs=$(jq -r '.site_dirs | .[]' < $MANIFEST_FILE) || exit $?
+    for d in $dirs
     do
-        process_single_repo "$varname" "$giturl" "$dirpath"
-    done < /srv/source/manifest.csv
+        RSYNC_EXCLUDE+=(--exclude "$d")
+    done
+
+    # Iterate through the manifest and process each repo in turn.
+    declare -A repo_array
+    repo_count=$(jq -r '.repos | length' < $MANIFEST_FILE) || exit $?
+    for ((i=0; i < repo_count; i++))
+    do
+        # Go through some funky steps to read in the repo definition
+        # into an array that we can then pass to the function.
+        #
+        # We save the output from jq first in case it barfs so that we can exit then.
+        PARSED=$(jq -r ".repos | .[$i] | to_entries | .[] | .key + \"=\" + .value" $MANIFEST_FILE) || exit $?
+        while IFS='=' read -r key value; do
+            repo_array["$key"]="$value"
+        done <<< "$PARSED"
+        process_single_repo "${repo_array[tag]}" "${repo_array[url]}" "${repo_array[dir]}"
+    done
 }
 
 # Check if this is a multi-repo site and take the appropriate action.
 check_multi_repo() {
     # A multi-repo site is determined by whether or not there is a manifest
     # file in /srv/source.
-    if [ -f "/srv/source/manifest.csv" ]; then
-        echo "Multi-repo site detected; processing all repositories required."
+    if [ -f "$MANIFEST_FILE" ]; then
+        echo "Multi-repo site detected; processing the required repositories ..."
         process_repos
         SOURCE_DIR="/srv/source/merged_sources"
         JEKYLL_EXTRA="-s $SOURCE_DIR --layouts $SOURCE_DIR/_layouts"
@@ -219,7 +256,7 @@ check_multi_repo() {
 # Check that we've got a Gemfile in the source directory.
 check_Gemfile() {
     if [ ! -f "$SOURCE_DIR/Gemfile" ]; then
-        echo "Cannot find Gemfile in source directory"
+        echo -e "${RED}Cannot find Gemfile in source directory${NC}"
         exit 1
     fi
 }
@@ -241,15 +278,19 @@ set_working_directory() {
 }
 
 jekyll_commands_common() {
+    # Need to tell bundler where the Gemfile is located in case we're
+    # building a multi-repo site.
+    BUNDLE_GEMFILE="$SOURCE_DIR/Gemfile" \
     bundle exec jekyll \
     "$JEKYLL_ACTION" \
-    --config "_config.yml,_config-$JEKYLL_ENV.yml" \
+    $JEKYLL_EXTRA \
+    --config "$SOURCE_DIR/_config.yml,$SOURCE_DIR/_config-$JEKYLL_ENV.yml" \
     "$@"
 }
 
 # Validate the source material before trying to build the site
 jekyll_doctor() {
-    echo "Validating source files"
+    echo -e "${YELLOW}Validating source files${NC}"
     JEKYLL_ACTION="doctor" \
     jekyll_commands_common ; \
     EXIT_CODE=$?
@@ -263,7 +304,7 @@ jekyll_doctor() {
 # Build the site
 # Default to building; allows JEKYLL_ACTION override to build and serve.
 jekyll_build() {
-    echo "Building site"
+    echo -e "${YELLOW}Building site${NC}"
     if [ -z "$JEKYLL_ACTION" ]; then
         JEKYLL_ACTION="build"
     fi
@@ -276,7 +317,6 @@ jekyll_build() {
     $HOSTING_OPTIONS \
     --strict_front_matter \
     --trace \
-    $JEKYLL_EXTRA \
     "$@" \
     JEKYLL_ENV="$JEKYLL_ENV"
 }
