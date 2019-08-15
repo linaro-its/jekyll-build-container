@@ -13,7 +13,7 @@ In addition to the notes below, more documentation can be found on the [wiki](ht
 * An operating system capable of running [Docker](https://www.docker.com)
 * Enough free RAM and disc space
 
-Building has been tested with [Docker Community Edition](https://www.docker.com/community-edition#/download) under [Arch Linux](https://archlinux.org) and [Ubuntu](https://www.ubuntu.com).
+Building has been tested with [Docker Community Edition](https://www.docker.com/community-edition#/download) under [Arch Linux](https://archlinux.org), [Ubuntu](https://www.ubuntu.com) and [Windows 10](https://www.microsoft.com).
 
 ### Building the container
 
