@@ -1,4 +1,5 @@
 # jekyll-build-container
+
 A Docker container used by Linaro's web site build process.
 
 The container isolates the building of Linaro's Jekyll-based web sites. This avoids needing to install directly on the host the numerous packages used when building the sites.
@@ -6,6 +7,7 @@ The container isolates the building of Linaro's Jekyll-based web sites. This avo
 In addition to the notes below, more documentation can be found on the [wiki](https://github.com/linaro-its/jekyll-build-container/wiki).
 
 ## Building
+
 ### Prerequisites
 
 * An operating system capable of running [Docker](https://www.docker.com)
@@ -13,7 +15,8 @@ In addition to the notes below, more documentation can be found on the [wiki](ht
 
 Building has been tested with [Docker Community Edition](https://www.docker.com/community-edition#/download) under [Arch Linux](https://archlinux.org) and [Ubuntu](https://www.ubuntu.com).
 
-### Building
+### Building the container
+
 Build the container in the usual way, e.g.
 
 `docker build --rm -t "linaroits/jekyllsitebuild:<tag>" .`
@@ -22,7 +25,7 @@ Build the container in the usual way, e.g.
 
 `JEKYLLSITEBUILD="personaltag" ./build-site.sh`
 
-If you omit `<tag>`, Docker will default to tagging the container as `latest` which could cause confusion if testing local changes. For that reason, Linaro-provided versions of the jekyllsitebuild container will display the Bamboo build reference at the start of the scripts being run, e.g.:
+If you omit `<tag>`, Docker will default to tagging the container as `latest` which could cause confusion if testing local changes. For that reason, Linaro-provided versions of the `jekyllsitebuild` container will display the Bamboo build reference at the start of the scripts being run, e.g.:
 
 ```
 Container built by bamboo.linaro.org: CON-JBC-JOB1-43
