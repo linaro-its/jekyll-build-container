@@ -85,11 +85,16 @@ check_source_dir() {
 }
 
 get_repo_url() {
+    # $1 is the git config file to be read to retrieve the URL.
     if [ ! -f "$1" ]; then
         # No file to get the URL from so quietly fail back to the caller
         REPOURL=""
         return
     fi
+    # Use awk to:
+    # a) find a line that starts with 'remote "origin"'
+    # b) then find a line that starts with 'url ='
+    # and output the URL (the third field - $3).
     REPOURL=$(awk '/remote "origin"/ {f=1; next} f==1&& /url =/ {f=0; print $3}' "$1")
     # This is likely to be something like git@github.com:96boards/documentation.git
     # but we need something like https://github.com/96boards/documentation.git so
@@ -99,7 +104,7 @@ get_repo_url() {
     # as that then helps us if we need to munge anyway.
     IFS=':' read -ra SPLIT <<< "$REPOURL"
     #
-    # If no colon, we've fowled up somewhere.
+    # If no colon, we've fouled up somewhere.
     if [ "${#SPLIT[@]}" != "2" ]; then
         echo -e "${RED}Failed to retrieve Git URL from $1${NC}"
         exit 1
@@ -123,7 +128,7 @@ check_srv_source() {
     # the paths read from the manifest file always start with /
     dest_path="/srv/source/merged_sources$3"
     mkdir -p "$dest_path" || exit 1
-    rsync -r "${RSYNC_EXCLUDE[@]}" /srv/source/ "$dest_path" || exit 1
+    rsync -cri "${RSYNC_EXCLUDE[@]}" /srv/source/ "$dest_path" || exit 1
 }
 
 # If /srv/<varname> (where varname is $1) exists and matches the repository
@@ -140,7 +145,7 @@ check_srv_varname() {
         # the paths read from the manifest file always start with /
         dest_path="/srv/source/merged_sources$3"
         mkdir -p "$dest_path" || exit 1
-        rsync -r "${RSYNC_EXCLUDE[@]}" "/srv/$1"/ "$dest_path" || exit 1
+        rsync -cri "${RSYNC_EXCLUDE[@]}" "/srv/$1"/ "$dest_path" || exit 1
     else
         # Show that this failed
         return 1
@@ -157,7 +162,7 @@ clone_missing_repo() {
     echo "Copying repo files into $3"
     dest_path="/srv/source/merged_sources$3"
     mkdir -p "$dest_path" || exit 1
-    cp -r "$temp_dir"/* "$dest_path" || exit 1
+    rsync -cri "${RSYNC_EXCLUDE[@]}" "$temp_dir"/ "$dest_path" || exit 1
     rm -rf "$temp_dir" || exit 1
 }
 
