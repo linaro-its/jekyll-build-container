@@ -115,6 +115,22 @@ get_repo_url() {
     REPOURL="https://github.com/${SPLIT[1]}"
 }
 
+do_rsync() {
+    # $1 is the source and $2 is the destination.
+    # Using a function consolidates all of the places where rsync is
+    # used.
+    #
+    # rsync flags:
+    # -c: use checksums to compare files to see if the version in the source
+    #     is difference from the target. Avoids problems caused by datestamps
+    #     not being preserved or clock differences.
+    # -r: recurse.
+    # -i: itemise changes. This only happens if the file exists in both the
+    #     source and the destination. Useful for confirming that rsync
+    #     has picked up the desired changes.
+    rsync -cri "${RSYNC_EXCLUDE[@]}" "$1" "$2"
+}
+
 # If /srv/source contains the files for the repository specified
 # in $2, copy the files to the path specified in $3.
 check_srv_source() {
@@ -128,7 +144,7 @@ check_srv_source() {
     # the paths read from the manifest file always start with /
     dest_path="/srv/source/merged_sources$3"
     mkdir -p "$dest_path" || exit 1
-    rsync -cri "${RSYNC_EXCLUDE[@]}" /srv/source/ "$dest_path" || exit 1
+    do_rsync /srv/source/ "$dest_path" || exit 1
 }
 
 # If /srv/<varname> (where varname is $1) exists and matches the repository
@@ -145,7 +161,7 @@ check_srv_varname() {
         # the paths read from the manifest file always start with /
         dest_path="/srv/source/merged_sources$3"
         mkdir -p "$dest_path" || exit 1
-        rsync -cri "${RSYNC_EXCLUDE[@]}" "/srv/$1"/ "$dest_path" || exit 1
+        do_rsync /srv/"$1"/ "$dest_path" || exit 1
     else
         # Show that this failed
         return 1
@@ -162,7 +178,7 @@ clone_missing_repo() {
     echo "Copying repo files into $3"
     dest_path="/srv/source/merged_sources$3"
     mkdir -p "$dest_path" || exit 1
-    rsync -cri "${RSYNC_EXCLUDE[@]}" "$temp_dir"/ "$dest_path" || exit 1
+    do_rsync "$temp_dir"/ "$dest_path" || exit 1
     rm -rf "$temp_dir" || exit 1
 }
 
