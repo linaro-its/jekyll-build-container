@@ -117,12 +117,10 @@ ENV RUBY_GEMS \
  jekyll-include-cache:0.2.0 \
  # Used by devicetree.org
  jekyll-minimagick:0.0.4 \
- # Used by ?
+ # Used by 96boards.org
  jekyll-relative-links:0.6.0 \
  # Used by connect.linaro.org, linaro.cloud
  jekyll-responsive-image:1.5.2 \
- # Used by ?
- jekyll-titles-from-headings:0.5.1 \
  # Used by 96boards.org
  jekyll-toc:0.12.1 \
  # Used by lkft.linaro.org
