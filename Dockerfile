@@ -143,7 +143,7 @@ ENV RUBY_GEMS \
  # Used by staging.lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
  # Gems staged for removal
- jumbo-jekyll-theme:5.5.5 \
+ jumbo-jekyll-theme:5.5.5
 
 LABEL org.linaro.gems=${RUBY_GEMS}
 
