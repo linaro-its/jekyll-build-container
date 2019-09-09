@@ -144,7 +144,9 @@ ENV RUBY_GEMS \
  # Used by connect.linaro.org, linaro.cloud, linaro.org
  nokogiri:1.10.4 \
  # Used by staging.lkft.linaro.org
- seriously_simple_static_starter:0.7.0
+ seriously_simple_static_starter:0.7.0 \
+ # Staged for removal (ensures builds pass)
+ jumbo-jekyll-theme:5.5.5 
 LABEL org.linaro.gems=${RUBY_GEMS}
 
 RUN gem install --no-document \
