@@ -285,8 +285,8 @@ check_Gemfile() {
 # If there is a Gemfile.lock, delete it because it may reference child-gems
 # that the build container doesn't have installed.
 remove_Gem_lockfile() {
-    if [ -f "Gemfile.lock" ]; then
-        rm Gemfile.lock
+    if [ -f "$SOURCE_DIR/Gemfile.lock" ]; then
+        rm "$SOURCE_DIR/Gemfile.lock"
     fi
 }
 
