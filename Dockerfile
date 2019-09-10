@@ -37,6 +37,9 @@ ENV UNVERSIONED_DEPENDENCY_PACKAGES \
  # Needed by the build-site script to determine if this is the latest container.
  curl \
  jq \
+ # Needed by the build-site script to copy stuff and retrieve repos.
+ rsync \
+ git \
  # Jekyll prerequisites, except Ruby. https://jekyllrb.com/docs/installation/
  build-essential \
  # Required for callback plugin.
@@ -114,34 +117,35 @@ ENV RUBY_GEMS \
  jekyll-include-cache:0.2.0 \
  # Used by devicetree.org
  jekyll-minimagick:0.0.4 \
- # Used by ?
+ # Used by 96boards.org
  jekyll-relative-links:0.6.0 \
  # Used by connect.linaro.org, linaro.cloud
  jekyll-responsive-image:1.5.2 \
- # Used by ?
- jekyll-titles-from-headings:0.5.1 \
+ # Used by 96boards.org
+ jekyll-toc:0.12.1 \
  # Used by lkft.linaro.org
  jumbo-jekyll-theme:1.4.4 \
  # Used by 96boards.ai
  jumbo-jekyll-theme:3.9.4 \
  # Used by staging.96boards.ai
  jumbo-jekyll-theme:5.3.4 \
- # Used by staging.connect.linaro.org
- jumbo-jekyll-theme:5.6.3 \
+ # Used by (staging.)connect.linaro.org
  jumbo-jekyll-theme:5.6.4 \
  # Used by 96boards.org
  jumbo-jekyll-theme:5.5.3 \
- # Used by connect.linaro.org, devicetree.org, linaro.cloud, linaro.org,
+ # Used by devicetree.org, linaro.cloud, linaro.org,
  # mlplatform.org, op-tee.org, trustedfirmware.org,
  jumbo-jekyll-theme:5.5.1 \
  # Used by staging.linaro.org
- jumbo-jekyll-theme:5.5.5 \
+ jumbo-jekyll-theme:5.6.5 \
  # Used by devicetree.org, op-tee.org
  mini_magick:4.9.3 \
  # Used by connect.linaro.org, linaro.cloud, linaro.org
- nokogiri:1.10.3 \
+ nokogiri:1.10.4 \
  # Used by staging.lkft.linaro.org
- seriously_simple_static_starter:0.7.0
+ seriously_simple_static_starter:0.7.0 \
+ # Staged for removal (ensures builds pass)
+ jumbo-jekyll-theme:5.5.5
 LABEL org.linaro.gems=${RUBY_GEMS}
 
 RUN gem install --no-document \
