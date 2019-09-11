@@ -137,6 +137,8 @@ ENV RUBY_GEMS \
  # Used by connect.linaro.org, devicetree.org, linaro.cloud, linaro.org,
  # mlplatform.org, op-tee.org, trustedfirmware.org,
  jumbo-jekyll-theme:5.5.1 \
+ # (staging).openampproject.org
+ jumbo-jekyll-theme:5.6.5 \
  # Used by staging.linaro.org
  jumbo-jekyll-theme:5.5.5 \
  # Used by devicetree.org, op-tee.org
