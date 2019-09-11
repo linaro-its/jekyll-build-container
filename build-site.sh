@@ -84,35 +84,57 @@ check_source_dir() {
     SOURCE_DIR="/srv/source"
 }
 
-get_repo_url() {
-    # $1 is the git config file to be read to retrieve the URL.
-    if [ ! -f "$1" ]; then
-        # No file to get the URL from so quietly fail back to the caller
-        REPOURL=""
-        return
-    fi
-    # Use awk to:
-    # a) find a line that starts with 'remote "origin"'
-    # b) then find a line that starts with 'url ='
-    # and output the URL (the third field - $3).
-    REPOURL=$(awk '/remote "origin"/ {f=1; next} f==1&& /url =/ {f=0; print $3}' "$1")
+parse_repo_url() {
+    REPOURL=""
     # This is likely to be something like git@github.com:96boards/documentation.git
     # but we need something like https://github.com/96boards/documentation.git so
     # munge things around into the correct format.
     #
     # Start by seeing if the URL starts with https:. Do this by splitting on the colon
     # as that then helps us if we need to munge anyway.
-    IFS=':' read -ra SPLIT <<< "$REPOURL"
+    IFS=':' read -ra SPLIT <<< "$1"
     #
     # If no colon, we've fouled up somewhere.
     if [ "${#SPLIT[@]}" != "2" ]; then
-        echo -e "${RED}Failed to retrieve Git URL from $1${NC}"
-        exit 1
+        return
     fi
+    #
+    # If already https then accept that
     if [ "${SPLIT[0]}" == "https" ]; then
+        REPOURL="$1"
         return
     fi
     REPOURL="https://github.com/${SPLIT[1]}"
+}
+
+check_repo_url() {
+    # $1 is the git config file to be read to retrieve the URL.
+    # $2 is the URL we want to match against.
+    if [ ! -f "$1" ]; then
+        # No file to get the URL from so quietly fail back to the caller
+        REPOURL=""
+        return
+    fi
+    # Use awk to:
+    # a) find a line that starts with 'remote "'
+    # b) then find a line that starts with 'url ='
+    # and output the URL (the third field - $3).
+    #
+    # In forked repos, there can be more than one remote entry since the origin
+    # is going to be where the contributor's copy of the repo exists and the
+    # upstream will be where it was forked from.
+    REPO_URLS=$(awk '/remote "/ {f=1; next} f==1&& /url =/ {f=0; print $3}' "$1")
+    for u in $REPO_URLS
+    do
+        parse_repo_url "$u"
+        if [ "$REPOURL" == "$2" ]; then
+            # Got a match
+            return
+        fi
+    done
+    #
+    # No matches on this repo
+    REPOURL=""
 }
 
 do_rsync() {
@@ -134,8 +156,8 @@ do_rsync() {
 # If /srv/source contains the files for the repository specified
 # in $2, copy the files to the path specified in $3.
 check_srv_source() {
-    get_repo_url /srv/source/.git/config
-    if [ "$REPOURL" != "$2" ]; then
+    check_repo_url /srv/source/.git/config "$2"
+    if [ -z "$REPOURL" ]; then
         # Not this repo
         return 1
     fi
@@ -285,8 +307,8 @@ check_Gemfile() {
 # If there is a Gemfile.lock, delete it because it may reference child-gems
 # that the build container doesn't have installed.
 remove_Gem_lockfile() {
-    if [ -f "Gemfile.lock" ]; then
-        rm Gemfile.lock
+    if [ -f "$SOURCE_DIR/Gemfile.lock" ]; then
+        rm "$SOURCE_DIR/Gemfile.lock"
     fi
 }
 
