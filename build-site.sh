@@ -33,8 +33,9 @@ get_tag_for_latest() {
     ALL_TAGS=$(curl -s -H "Authorization: Bearer $TOKEN" https://index.docker.io/v2/$REPOSITORY/tags/list | jq -r .tags[]) || return $?
     # Get image digest for target.
     TARGET_DIGEST=$(curl -s -D - -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" "https://index.docker.io/v2/$REPOSITORY/manifests/$TARGET_TAG" | grep Docker-Content-Digest | cut -d ' ' -f 2) || return $?
-    # For each tag ...
-    for tag in "${ALL_TAGS[@]}"; do
+    # Iterate through the tags, but we need to use unquoted bash expansion so turn off the shellcheck warning
+    # shellcheck disable=SC2068
+    for tag in ${ALL_TAGS[@]}; do
         # get image digest
         digest=$(curl -s -D - -H "Authorization: Bearer $TOKEN" -H "Accept: application/vnd.docker.distribution.manifest.v2+json" "https://index.docker.io/v2/$REPOSITORY/manifests/$tag" | grep Docker-Content-Digest | cut -d ' ' -f 2) || return $?
         # and check digest.
@@ -55,6 +56,12 @@ check_container_version() {
             echo "         $LATEST_ALIAS"
             echo "If the build fails, please 'docker pull linaroits/jekyllsitebuild'"
             echo "and try again."
+            echo "******************************************************************"
+        fi
+        if [ -z "$LATEST_ALIAS" ]; then
+            echo "******************************************************************"
+            echo "WARNING! It has not been possible to check that this is the latest"
+            echo "         Docker image."
             echo "******************************************************************"
         fi
     fi
