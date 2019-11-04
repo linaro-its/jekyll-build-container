@@ -123,28 +123,13 @@ ENV RUBY_GEMS \
  jekyll-responsive-image:1.5.2 \
  # Used by 96boards.org
  jekyll-toc:0.12.1 \
- # Used by lkft.linaro.org
- jumbo-jekyll-theme:1.4.4 \
- # Used by 96boards.ai
- jumbo-jekyll-theme:3.9.4 \
- # Used by staging.96boards.ai
- jumbo-jekyll-theme:5.3.4 \
- # Used by (staging.)connect.linaro.org
- jumbo-jekyll-theme:5.6.4 \
- # Used by 96boards.org
- jumbo-jekyll-theme:5.5.3 \
- # Used by devicetree.org, linaro.cloud, linaro.org,
- # mlplatform.org, op-tee.org, trustedfirmware.org,
- jumbo-jekyll-theme:5.5.1 \
- # (staging).openampproject.org
- jumbo-jekyll-theme:5.6.5 \
- # Used by staging.linaro.org
+ # Used by all Jekyll sites
  jumbo-jekyll-theme:5.6.5 \
  # Used by devicetree.org, op-tee.org
  mini_magick:4.9.3 \
  # Used by connect.linaro.org, linaro.cloud, linaro.org
  nokogiri:1.10.4 \
- # Used by staging.lkft.linaro.org
+ # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
  # Staged for removal (ensures builds pass)
  jumbo-jekyll-theme:5.5.5
