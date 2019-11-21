@@ -73,10 +73,6 @@ check_environment_variables() {
         echo -e "${RED}JEKYLL_ENV needs to be set${NC}"
         exit 1
     fi
-    if [ "$JEKYLL_ENV" != "staging" ] && [ "$JEKYLL_ENV" != "production" ]; then
-        echo -e "${RED}JEKYLL_ENV must be set to 'staging' or 'production'${NC}"
-        exit 1
-    fi
 }
 
 # Check that we've got a source dir. We now always build the site inside the
