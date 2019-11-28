@@ -1,2 +1,2 @@
 # Ensure that the shell script doesn't have its line endings messed up
-*.sh    text
+*.sh    text eol=lf
