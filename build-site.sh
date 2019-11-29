@@ -115,6 +115,7 @@ check_repo_url() {
     # $2 is the URL we want to match against.
     if [ ! -f "$1" ]; then
         # No file to get the URL from so quietly fail back to the caller
+        echo "Cannot read $1"
         REPOURL=""
         return
     fi
@@ -132,6 +133,7 @@ check_repo_url() {
         parse_repo_url "$u"
         if [ "$REPOURL" == "$2" ]; then
             # Got a match
+            echo "Matched $2"
             return
         fi
     done
@@ -176,8 +178,8 @@ check_srv_source() {
 # specified in $2, copy the files to the path specified in $3.
 check_srv_varname() {
     if [ -d "/srv/$1" ]; then
-        get_repo_url "/srv/$1/.git/config"
-        if [ "$REPOURL" != "$2" ]; then
+        check_repo_url "/srv/$1/.git/config" "$2"
+        if [ -z "$REPOURL" ]; then
             # Not this repo
             return 1
         fi
