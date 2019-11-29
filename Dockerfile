@@ -124,16 +124,16 @@ ENV RUBY_GEMS \
  # Used by 96boards.org
  jekyll-toc:0.12.1 \
  # Used by all Jekyll sites
- jumbo-jekyll-theme:5.6.7 \
+ jumbo-jekyll-theme:5.6.9.1 \
  # Used by devicetree.org, op-tee.org
  mini_magick:4.9.3 \
  # Used by connect.linaro.org, linaro.cloud, linaro.org
  nokogiri:1.10.4 \
  # Used by (staging.)lkft.linaro.org
- seriously_simple_static_starter:0.7.0 \
+ seriously_simple_static_starter:0.7.0
  # Staged for removal (ensures builds pass)
- jumbo-jekyll-theme:5.6.6 \
- jumbo-jekyll-theme:5.6.5
+#  jumbo-jekyll-theme:5.6.6 \
+#  jumbo-jekyll-theme:5.6.5
 LABEL org.linaro.gems=${RUBY_GEMS}
 
 RUN gem install --no-document \
