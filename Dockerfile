@@ -132,8 +132,9 @@ ENV RUBY_GEMS \
  # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
  # Staged for removal (ensures builds pass)
- jumbo-jekyll-theme:5.6.6 \ 
- jumbo-jekyll-theme:5.6.5
+ jumbo-jekyll-theme:5.6.6 \
+ jumbo-jekyll-theme:5.6.5 \
+ jumbo-jekyll-theme:5.7.0
 LABEL org.linaro.gems=${RUBY_GEMS}
 
 RUN gem install --no-document \
