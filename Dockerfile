@@ -117,6 +117,8 @@ ENV RUBY_GEMS \
  jekyll-include-cache:0.2.0 \
  # Used by devicetree.org
  jekyll-minimagick:0.0.4 \
+ # Used by Jekyll
+ jekyll:4.0.0 \
  # Used by 96boards.org
  jekyll-relative-links:0.6.0 \
  # Used by connect.linaro.org, linaro.cloud
@@ -134,7 +136,7 @@ ENV RUBY_GEMS \
  # Staged for removal (ensures builds pass)
  jumbo-jekyll-theme:5.6.6 \
  jumbo-jekyll-theme:5.6.5 \
- jumbo-jekyll-theme:5.7.0
+ jumbo-jekyll-theme:5.7.0.1
 LABEL org.linaro.gems=${RUBY_GEMS}
 
 RUN gem install --no-document \
