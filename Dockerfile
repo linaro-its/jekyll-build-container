@@ -136,7 +136,7 @@ ENV RUBY_GEMS \
  # Staged for removal (ensures builds pass)
  jumbo-jekyll-theme:5.6.6 \
  jumbo-jekyll-theme:5.6.5 \
- jumbo-jekyll-theme:5.7.0.2
+ jumbo-jekyll-theme:5.7.0.5
 LABEL org.linaro.gems=${RUBY_GEMS}
 
 RUN gem install --no-document \
