@@ -117,7 +117,7 @@ ENV RUBY_GEMS \
  jekyll-include-cache:0.2.0 \
  # Used by devicetree.org
  jekyll-minimagick:0.0.4 \
- # Used by Jekyll
+ # Jekyll static site builder
  jekyll:3.8.0 \
  jekyll:4.0.0 \
  # Used by 96boards.org
