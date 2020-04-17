@@ -118,6 +118,7 @@ ENV RUBY_GEMS \
  # Used by devicetree.org
  jekyll-minimagick:0.0.4 \
  # Used by Jekyll
+ jekyll:3.8.0 \
  jekyll:4.0.0 \
  # Used by 96boards.org
  jekyll-relative-links:0.6.0 \
