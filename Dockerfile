@@ -133,10 +133,12 @@ ENV RUBY_GEMS \
  nokogiri:1.10.4 \
  # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
+ # Jumbo-jekyll-theme latest version
+ jumbo-jekyll-theme:5.7.0.5 \
  # Staged for removal (ensures builds pass)
  jumbo-jekyll-theme:5.6.6 \
- jumbo-jekyll-theme:5.6.5 \
- jumbo-jekyll-theme:5.7.0.5
+ jumbo-jekyll-theme:5.6.5
+
 LABEL org.linaro.gems=${RUBY_GEMS}
 
 RUN gem install --no-document \
