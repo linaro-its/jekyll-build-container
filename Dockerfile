@@ -117,6 +117,9 @@ ENV RUBY_GEMS \
  jekyll-include-cache:0.2.0 \
  # Used by devicetree.org
  jekyll-minimagick:0.0.4 \
+ # Jekyll static site builder
+ jekyll:3.8.0 \
+ jekyll:4.0.0 \
  # Used by 96boards.org
  jekyll-relative-links:0.6.0 \
  # Used by connect.linaro.org, linaro.cloud
@@ -131,9 +134,12 @@ ENV RUBY_GEMS \
  nokogiri:1.10.4 \
  # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
+ # Jumbo-jekyll-theme latest version
+ jumbo-jekyll-theme:5.7.0.5 \
  # Staged for removal (ensures builds pass)
- jumbo-jekyll-theme:5.6.6 \ 
+ jumbo-jekyll-theme:5.6.6 \
  jumbo-jekyll-theme:5.6.5
+
 LABEL org.linaro.gems=${RUBY_GEMS}
 
 RUN gem install --no-document \
