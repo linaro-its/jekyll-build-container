@@ -41,6 +41,8 @@ ENV UNVERSIONED_DEPENDENCY_PACKAGES \
  rsync \
  git \
  # Jekyll prerequisites, except Ruby. https://jekyllrb.com/docs/installation/
+ # The default Java Runtime Env - dependency of Google's Closure Compiler
+ default-jre \
  build-essential \
  # Required for callback plugin.
  zlib1g-dev \
@@ -136,6 +138,7 @@ ENV RUBY_GEMS \
  seriously_simple_static_starter:0.7.0 \
  # Jumbo-jekyll-theme latest version
  jumbo-jekyll-theme:6.0.0.1 \
+ closure-compiler \
  # Staged for removal (ensures builds pass)
  jumbo-jekyll-theme:5.6.6 \
  jumbo-jekyll-theme:5.6.5
