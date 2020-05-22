@@ -41,6 +41,8 @@ ENV UNVERSIONED_DEPENDENCY_PACKAGES \
  rsync \
  git \
  # Jekyll prerequisites, except Ruby. https://jekyllrb.com/docs/installation/
+ # The default Java Runtime Env - dependency of Google's Closure Compiler
+ default-jre \
  build-essential \
  # Required for callback plugin.
  zlib1g-dev \
