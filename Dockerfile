@@ -142,7 +142,7 @@ ENV RUBY_GEMS \
  # Staged for removal (ensures builds pass)
  jumbo-jekyll-theme:5.6.6 \
  jumbo-jekyll-theme:5.6.5 \
- jumbo-jekyll-theme:6.0.0.1 \
+ jumbo-jekyll-theme:6.0.0.1
 
 LABEL org.linaro.gems=${RUBY_GEMS}
 
