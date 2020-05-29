@@ -137,11 +137,12 @@ ENV RUBY_GEMS \
  # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
  # Jumbo-jekyll-theme latest version
- jumbo-jekyll-theme:6.0.0.1 \
+ jumbo-jekyll-theme:6.0.0.2 \
  closure-compiler \
  # Staged for removal (ensures builds pass)
  jumbo-jekyll-theme:5.6.6 \
- jumbo-jekyll-theme:5.6.5
+ jumbo-jekyll-theme:5.6.5 \
+ jumbo-jekyll-theme:6.0.0.1 \
 
 LABEL org.linaro.gems=${RUBY_GEMS}
 
