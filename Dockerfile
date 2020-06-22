@@ -124,6 +124,7 @@ ENV RUBY_GEMS \
  jekyll:4.0.0 \
  # Used by 96boards.org
  jekyll-relative-links:0.6.0 \
+ jekyll-relative-links:0.6.1 \
  # Used by connect.linaro.org, linaro.cloud
  jekyll-responsive-image:1.5.2 \
  # Used by 96boards.org
