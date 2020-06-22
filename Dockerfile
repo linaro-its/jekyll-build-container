@@ -128,6 +128,7 @@ ENV RUBY_GEMS \
  jekyll-responsive-image:1.5.2 \
  # Used by 96boards.org
  jekyll-toc:0.12.1 \
+ jekyll-readme-index:0.3.0 \
  # Used by all Jekyll sites
  jumbo-jekyll-theme:5.6.9.2 \
  # Used by devicetree.org, op-tee.org
