@@ -169,7 +169,7 @@ check_srv_source() {
         # Not this repo
         return 1
     fi
-    echo "Copying repo files into $3"
+    echo "Copying existing repo files into $3"
     # Build the destination path and make sure it exists. Note that
     # the paths read from the manifest file always start with /
     dest_path="/srv/source/merged_sources$3"
@@ -205,7 +205,7 @@ clone_missing_repo() {
     temp_dir=$(mktemp -d)
     echo "Cloning $2"
     git clone --quiet "$2" "$temp_dir" || exit 1
-    echo "Copying repo files into $3"
+    echo "Copying cloned repo files into $3"
     dest_path="/srv/source/merged_sources$3"
     mkdir -p "$dest_path" || exit 1
     do_rsync "$temp_dir"/ "$dest_path" || exit 1
