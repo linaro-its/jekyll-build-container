@@ -111,6 +111,9 @@ parse_repo_url() {
 }
 
 check_repo_url() {
+    echo "check_repo_url"
+    echo "git config @ $1"
+    echo "trying to match $2"
     # $1 is the git config file to be read to retrieve the URL.
     # $2 is the URL we want to match against.
     if [ ! -f "$1" ]; then
@@ -326,8 +329,6 @@ set_working_directory() {
 }
 
 jekyll_commands_common() {
-    # Add a directory listing so that we can check date stamps
-    ls -l "$SOURCE_DIR"
     # Need to tell bundler where the Gemfile is located in case we're
     # building a multi-repo site.
     BUNDLE_GEMFILE="$SOURCE_DIR/Gemfile" \
