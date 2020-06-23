@@ -111,9 +111,6 @@ parse_repo_url() {
 }
 
 check_repo_url() {
-    echo "check_repo_url"
-    echo "git config @ $1"
-    echo "trying to match $2"
     # $1 is the git config file to be read to retrieve the URL.
     # $2 is the URL we want to match against.
     if [ ! -f "$1" ]; then
