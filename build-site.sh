@@ -326,6 +326,8 @@ set_working_directory() {
 }
 
 jekyll_commands_common() {
+    # Add a directory listing so that we can check date stamps
+    ls -l "$SOURCE_DIR"
     # Need to tell bundler where the Gemfile is located in case we're
     # building a multi-repo site.
     BUNDLE_GEMFILE="$SOURCE_DIR/Gemfile" \
