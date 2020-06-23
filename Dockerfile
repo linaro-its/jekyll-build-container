@@ -124,10 +124,12 @@ ENV RUBY_GEMS \
  jekyll:4.0.0 \
  # Used by 96boards.org
  jekyll-relative-links:0.6.0 \
+ jekyll-relative-links:0.6.1 \
  # Used by connect.linaro.org, linaro.cloud
  jekyll-responsive-image:1.5.2 \
  # Used by 96boards.org
  jekyll-toc:0.12.1 \
+ jekyll-readme-index:0.3.0 \
  # Used by all Jekyll sites
  jumbo-jekyll-theme:5.6.9.2 \
  # Used by devicetree.org, op-tee.org
