@@ -147,7 +147,7 @@ ENV RUBY_GEMS \
  jumbo-jekyll-theme:6.0.0.1 \
  jumbo-jekyll-theme:6.0.0.4 \
  jumbo-jekyll-theme:6.0.0.5 \
- jumbo-jekyll-theme:6.0.1.4 \
+ jumbo-jekyll-theme:6.0.1.4 
 
 LABEL org.linaro.gems=${RUBY_GEMS}
 
