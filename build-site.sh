@@ -201,7 +201,7 @@ check_srv_varname() {
 clone_missing_repo() {
     temp_dir=$(mktemp -d)
     echo "Cloning $2"
-    git clone --quiet "$2" "$temp_dir" || exit 1
+    git clone --quiet --no-tags --depth=1 "$2" "$temp_dir" || exit 1
     echo "Copying cloned repo files into $3"
     dest_path="/srv/source/merged_sources$3"
     mkdir -p "$dest_path" || exit 1
