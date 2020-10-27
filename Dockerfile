@@ -139,6 +139,7 @@ ENV RUBY_GEMS \
  # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
  # Jumbo-jekyll-theme latest version
+ linaro-jekyll-theme:4.0.0 \
  jumbo-jekyll-theme:6.0.2.1 \
  closure-compiler \
  # Staged for removal (ensures builds pass)
