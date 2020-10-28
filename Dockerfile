@@ -140,6 +140,7 @@ ENV RUBY_GEMS \
  seriously_simple_static_starter:0.7.0 \
  # Jumbo-jekyll-theme latest version
  linaro-jekyll-theme:4.0.1 \
+ linaro-jekyll-theme:4.0.2 \
  jumbo-jekyll-theme:6.0.2.1 \
  closure-compiler \
  # Staged for removal (ensures builds pass)
