@@ -93,9 +93,16 @@ parse_repo_url() {
     # but we need something like https://github.com/96boards/documentation.git so
     # munge things around into the correct format.
     #
+    # If the provided URL doesn't end with ".git", add that first
+    if [ "$1" == *.git ]; then
+        INTERIM="$1"
+    else
+        INTERIM="$1.git"
+    fi
+    #
     # Start by seeing if the URL starts with https:. Do this by splitting on the colon
     # as that then helps us if we need to munge anyway.
-    IFS=':' read -ra SPLIT <<< "$1"
+    IFS=':' read -ra SPLIT <<< "$INTERIM"
     #
     # If no colon, we've fouled up somewhere.
     if [ "${#SPLIT[@]}" != "2" ]; then
@@ -104,7 +111,7 @@ parse_repo_url() {
     #
     # If already https then accept that
     if [ "${SPLIT[0]}" == "https" ]; then
-        REPOURL="$1"
+        REPOURL="$INTERIM"
         return
     fi
     REPOURL="https://github.com/${SPLIT[1]}"
