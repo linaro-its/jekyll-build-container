@@ -140,7 +140,6 @@ check_repo_url() {
         parse_repo_url "$u"
         if [ "$REPOURL" == "$2" ]; then
             # Got a match
-            echo "Matched $2"
             return
         fi
     done
@@ -159,10 +158,7 @@ do_rsync() {
     #     is difference from the target. Avoids problems caused by datestamps
     #     not being preserved or clock differences.
     # -r: recurse.
-    # -i: itemise changes. This only happens if the file exists in both the
-    #     source and the destination. Useful for confirming that rsync
-    #     has picked up the desired changes.
-    rsync -cri "${RSYNC_EXCLUDE[@]}" "$1" "$2"
+    rsync -cr "${RSYNC_EXCLUDE[@]}" "$1" "$2"
 }
 
 # If /srv/source contains the files for the repository specified
@@ -173,7 +169,7 @@ check_srv_source() {
         # Not this repo
         return 1
     fi
-    echo "Copying existing repo files into $3"
+    echo "Copying existing $1 repo files into $3"
     # Build the destination path and make sure it exists. Note that
     # the paths read from the manifest file always start with /
     dest_path="/srv/source/merged_sources$3"
