@@ -160,7 +160,7 @@ do_rsync() {
     #     is difference from the target. Avoids problems caused by datestamps
     #     not being preserved or clock differences.
     # -r: recurse.
-    rsync -cri --progress "${RSYNC_EXCLUDE[@]}" "$1" "$2"
+    rsync -cr --info=progress2 "${RSYNC_EXCLUDE[@]}" "$1" "$2"
 }
 
 # If /srv/source contains the files for the repository specified
