@@ -138,10 +138,8 @@ check_repo_url() {
     for u in $REPO_URLS
     do
         parse_repo_url "$u"
-        echo "Comparing $REPOURL against $2"
         if [ "$REPOURL" == "$2" ]; then
             # Got a match
-            echo "Matched $2"
             return
         fi
     done
@@ -171,7 +169,7 @@ check_srv_source() {
         # Not this repo
         return 1
     fi
-    echo "Copying existing repo files into $3"
+    echo "Copying existing $1 repo files into $3"
     # Build the destination path and make sure it exists. Note that
     # the paths read from the manifest file always start with /
     dest_path="/srv/source/merged_sources$3"
