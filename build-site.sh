@@ -138,6 +138,7 @@ check_repo_url() {
     for u in $REPO_URLS
     do
         parse_repo_url "$u"
+        echo "Comparing $REPOURL against $2"
         if [ "$REPOURL" == "$2" ]; then
             # Got a match
             echo "Matched $2"
@@ -159,10 +160,7 @@ do_rsync() {
     #     is difference from the target. Avoids problems caused by datestamps
     #     not being preserved or clock differences.
     # -r: recurse.
-    # -i: itemise changes. This only happens if the file exists in both the
-    #     source and the destination. Useful for confirming that rsync
-    #     has picked up the desired changes.
-    rsync -cri "${RSYNC_EXCLUDE[@]}" "$1" "$2"
+    rsync -cri --progress "${RSYNC_EXCLUDE[@]}" "$1" "$2"
 }
 
 # If /srv/source contains the files for the repository specified
