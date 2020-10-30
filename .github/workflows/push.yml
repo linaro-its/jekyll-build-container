@@ -1,0 +1,36 @@
+name: PushAction
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: [ self-hosted, containers-runner ]
+    steps:
+      - name: Cancel previous runs
+        uses: n1hility/cancel-previous-runs@v2
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch git repository
+        uses: actions/checkout@v2
+
+      - run: env
+
+      - name: Build container image
+        run: |
+          # Do some magic to figure out what our base image is
+          IFS=' ' read -ra FOO <<< $(grep "FROM" Dockerfile)
+          # Make sure we have the latest Ubuntu base image
+          docker pull ${FOO[1]}
+          # and then build our container.
+          docker build --force-rm --build-arg bamboo_build=$GITHUB_RUN_NUMBER -t "linaroits/jekyllsitebuild:$GITHUB_RUN_NUMBER" .
+
+      - name: Publish container image
+        run: |
+          docker tag linaroits/jekyllsitebuild:$GITHUB_RUN_NUMBER linaroits/jekyllsitebuild:latest
+          docker login -u "${{ secrets.DOCKER_USER }}" -p "${{ secrets.DOCKER_PASSWORD }}"
+          docker push linaroits/jekyllsitebuild:latest
+          docker push linaroits/jekyllsitebuild:$GITHUB_RUN_NUMBER
