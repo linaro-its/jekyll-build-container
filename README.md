@@ -25,10 +25,10 @@ Build the container in the usual way, e.g.
 
 `JEKYLLSITEBUILD="personaltag" ./build-site.sh`
 
-If you omit `<tag>`, Docker will default to tagging the container as `latest` which could cause confusion if testing local changes. For that reason, Linaro-provided versions of the `jekyllsitebuild` container will display the Bamboo build reference at the start of the scripts being run, e.g.:
+If you omit `<tag>`, Docker will default to tagging the container as `latest` which could cause confusion if testing local changes. For that reason, Linaro-provided versions of the `jekyllsitebuild` container will display the GitHub build reference at the start of the scripts being run, e.g.:
 
-```
-Container built by bamboo.linaro.org: CON-JBC-JOB1-43
+```text
+Container built by GitHub. Build reference: 43
 ...
 ```
 
