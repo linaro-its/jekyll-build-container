@@ -23,6 +23,8 @@ jobs:
 
       - run: env
 
+      - run: cat $GITHUB_EVENT_PATH
+
       - name: Merge test branch
         uses: linaro-its/merge-test-branch@v2.5
         with:

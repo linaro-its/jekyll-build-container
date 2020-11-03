@@ -23,6 +23,8 @@ jobs:
 
       - run: env
 
+      - run: cat $GITHUB_EVENT_PATH
+
       - name: Build container image
         run: |
           cd $GITHUB_WORKSPACE/container-repo
