@@ -21,6 +21,11 @@ jobs:
         with:
           path: container-repo
 
+      - name: Determine image tag
+        run: |
+          IMAGE_TAG=$(cat "${{ github.event.after }}" | cut -c 1-8)
+          cat "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
+
       - run: env
 
       - run: cat $GITHUB_EVENT_PATH
@@ -33,11 +38,11 @@ jobs:
           # Make sure we have the latest Ubuntu base image
           docker pull ${FOO[1]}
           # and then build our container.
-          docker build --force-rm --build-arg bamboo_build=$GITHUB_RUN_NUMBER -t "linaroits/jekyllsitebuild:$GITHUB_RUN_NUMBER" .
+          docker build --force-rm --build-arg bamboo_build=$IMAGE_TAG -t "linaroits/jekyllsitebuild:$IMAGE_TAG" .
 
       - name: Publish container image
         run: |
-          docker tag linaroits/jekyllsitebuild:$GITHUB_RUN_NUMBER linaroits/jekyllsitebuild:latest
+          docker tag linaroits/jekyllsitebuild:$IMAGE_TAG linaroits/jekyllsitebuild:latest
           docker login -u "${{ secrets.DOCKER_USER }}" -p "${{ secrets.DOCKER_PASSWORD }}"
           docker push linaroits/jekyllsitebuild:latest
-          docker push linaroits/jekyllsitebuild:$GITHUB_RUN_NUMBER
+          docker push linaroits/jekyllsitebuild:$IMAGE_TAG
