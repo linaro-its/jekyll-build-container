@@ -85,11 +85,12 @@ jobs:
         run: cat "$GITHUB_WORKSPACE/${{ matrix.site }}/.github-env-master" >> $GITHUB_ENV
 
       - name: Directory push/pop
-        uses: linaro-its/directory-push-and-pop@v1.1
+        uses: linaro-its/directory-push-and-pop@v2.3
         with:
           cacheDirectory: /srv/site-builds
           namedDirectory: ${{ env.SITE_URL }}
           destinationDirectory: ${{ github.workspace }}/${{ matrix.site }}
+          popAtEnd: false
 
       - name: Build site
         run: |
