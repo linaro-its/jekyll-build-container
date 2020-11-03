@@ -48,7 +48,7 @@ get_tag_for_latest() {
 # If possible, show which container version this is
 check_container_version() {
     if [ -n "${BAMBOO_BUILD}" ]; then
-        echo "Container built by bamboo.linaro.org: ${BAMBOO_BUILD}"
+        echo "Container built by GitHub. Build reference: ${BAMBOO_BUILD}"
         get_tag_for_latest || LATEST_ALIAS=""
         if [ -n "$LATEST_ALIAS" ] && [ "$LATEST_ALIAS" != "${BAMBOO_BUILD}" ]; then
             echo "******************************************************************"
