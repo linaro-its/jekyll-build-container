@@ -16,11 +16,14 @@ jobs:
 
       - name: Fetch git repository
         uses: actions/checkout@v2
+        with:
+          path: container-repo
 
       - run: env
 
       - name: Build container image
         run: |
+          cd $GITHUB_WORKSPACE/container-repo
           # Do some magic to figure out what our base image is
           IFS=' ' read -ra FOO <<< $(grep "FROM" Dockerfile)
           # Make sure we have the latest Ubuntu base image
