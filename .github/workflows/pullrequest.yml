@@ -43,14 +43,37 @@ jobs:
     needs: build
     strategy:
       matrix:
-        site: [morello, op-tee, openamp]
+        site: [96boards-ai, 96boards-docs, 96boards-org, connect,
+               devicetree, linaro-cloud, linaro-org, lkft,
+               morello, mlplatform, op-tee, openamp,
+               trustedfirmware]
         include:
+          - site: 96boards-ai
+            repo: 96Boards/ai
+          - site: 96boards-docs
+            repo: 96Boards/documentation
+          - site: 96boards-org
+            repo: 96Boards/website
+          - site: connect
+            repo: Linaro/Connect
+          - site: devicetree
+            repo: devicetree-org/devicetree-website
+          - site: linaro-cloud
+            repo: Linaro/cloud
+          - site: linaro-org
+            repo: Linaro/website
+          - site: lkft
+            repo: Linaro/lkft-website
           - site: morello
             repo: MorelloProject/website
+          - site: mlplatform
+            repo: ArmNNWebsite/website
           - site: op-tee
             repo: OP-TEE/optee_website
           - site: openamp
             repo: OpenAMP/website
+          - site: trustedfirmware
+            repo: TrustedFirmwareWebsite/website
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -78,7 +101,7 @@ jobs:
     needs:
       - build
       - test
-    # if: "always()&&(needs.build.outputs.job_status=='success')"
+    if: "always()&&(needs.build.result=='success')"
     steps:
       - name: Dump needs context
         env:
