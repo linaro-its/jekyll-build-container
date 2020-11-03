@@ -3,6 +3,8 @@ name: PullRequestAction
 on:
   pull_request_target:
     branches: [ main, master ]
+    paths-ignore:
+      - .github/workflows/push.yml
 
 jobs:
   build:
@@ -76,7 +78,11 @@ jobs:
     needs:
       - build
       - test
-    if: "always()&&(needs.build.outputs.job_status=='success')"
+    # if: "always()&&(needs.build.outputs.job_status=='success')"
     steps:
+      - name: Dump needs context
+        env:
+          NEEDS_CONTEXT: ${{ toJson(needs) }}
+        run: echo "$NEEDS_CONTEXT"
       - name: Remove test Docker image
         run: docker rmi linaroits/jekyllsitebuild:$GITHUB_RUN_NUMBER
