@@ -1,0 +1,80 @@
+name: PullRequestAction
+
+on:
+  pull_request_target:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: [ self-hosted, containers-runner ]
+    steps:
+      - name: Cancel previous runs
+        uses: n1hility/cancel-previous-runs@v2
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fetch git repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          path: container-repo
+
+      - run: env
+
+      - name: Merge test branch
+        uses: linaro-its/merge-test-branch@v2.5
+
+      - name: Build container image
+        run: |
+          cd $GITHUB_WORKSPACE/container-repo
+          # Do some magic to figure out what our base image is
+          IFS=' ' read -ra FOO <<< $(grep "FROM" Dockerfile)
+          # Make sure we have the latest Ubuntu base image
+          docker pull ${FOO[1]}
+          # and then build our container.
+          docker build --force-rm -t "linaroits/jekyllsitebuild:$GITHUB_RUN_NUMBER" .
+
+  test:
+    runs-on: [ self-hosted, containers-runner ]
+    needs: build
+    strategy:
+      matrix:
+        site: [morello, op-tee, openamp]
+        include:
+          - site: morello
+            repo: MorelloProject/website
+          - site: op-tee
+            repo: OP-TEE/optee_website
+          - site: openamp
+            repo: OpenAMP/website
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: ${{ matrix.site }}
+          repository: ${{ matrix.repo }}
+
+      - name: Initialise environment
+        run: cat "$GITHUB_WORKSPACE/${{ matrix.site }}/.github-env-master" >> $GITHUB_ENV
+
+      - name: Directory push/pop
+        uses: linaro-its/directory-push-and-pop@v1.1
+        with:
+          cacheDirectory: /srv/site-builds
+          namedDirectory: ${{ env.SITE_URL }}
+          destinationDirectory: ${{ github.workspace }}/${{ matrix.site }}
+
+      - name: Build site
+        run: |
+          cd $GITHUB_WORKSPACE/${{ matrix.site }}
+          JEKYLLSITEBUILD=$GITHUB_RUN_NUMBER ./build-site.sh
+
+  finally:
+    runs-on: [ self-hosted, containers-runner ]
+    needs:
+      - build
+      - test
+    if: "always()&&(needs.build.outputs.job_status=='success'"
+    steps:
+      - name: Remove test Docker image
+        run: docker rmi linaroits/jekyllsitebuild:$GITHUB_RUN_NUMBER
