@@ -23,7 +23,7 @@ jobs:
 
       - name: Determine image tag
         run: |
-          IMAGE_TAG=$(echo "${{ github.event.after }}" | cut -c 1-8)
+          IMAGE_TAG=$(echo "${{ github.event.after }}" | cut -c 1-7)
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
       - run: env
