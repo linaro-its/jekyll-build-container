@@ -74,7 +74,7 @@ jobs:
     needs:
       - build
       - test
-    if: "always()&&(needs.build.outputs.job_status=='success'"
+    if: "always()&&(needs.build.outputs.job_status=='success')"
     steps:
       - name: Remove test Docker image
         run: docker rmi linaroits/jekyllsitebuild:$GITHUB_RUN_NUMBER
