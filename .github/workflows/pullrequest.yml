@@ -23,6 +23,8 @@ jobs:
 
       - name: Merge test branch
         uses: linaro-its/merge-test-branch@v2.5
+        with:
+          path: container-repo
 
       - name: Build container image
         run: |
