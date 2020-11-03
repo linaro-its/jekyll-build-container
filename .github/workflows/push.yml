@@ -3,6 +3,8 @@ name: PushAction
 on:
   push:
     branches: [ main, master ]
+    paths-ignore:
+      - .github/workflows/pullrequest.yml
   workflow_dispatch:
 
 jobs:
