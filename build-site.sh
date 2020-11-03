@@ -271,6 +271,7 @@ process_repos() {
     do
         RSYNC_EXCLUDE+=(--exclude "$d")
     done
+    echo "debug: RSYNC_EXCLUDE=${RSYNC_EXCLUDE[@]}"
 
     # Iterate through the manifest and process each repo in turn.
     declare -A repo_array
