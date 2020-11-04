@@ -28,7 +28,7 @@ jobs:
 
       - name: Determine image tag
         run: |
-          IMAGE_TAG=$(echo "${{ github.event.after }}" | cut -c 1-7)
+          IMAGE_TAG=$(echo "${{ github.event.pull_request.head.sha }}" | cut -c 1-7)
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
       - run: env
@@ -93,7 +93,7 @@ jobs:
 
       - name: Determine image tag
         run: |
-          IMAGE_TAG=$(echo "${{ github.event.after }}" | cut -c 1-7)
+          IMAGE_TAG=$(echo "${{ github.event.pull_request.head.sha }}" | cut -c 1-7)
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
       - name: Directory push/pop
@@ -118,7 +118,7 @@ jobs:
     steps:
       - name: Determine image tag
         run: |
-          IMAGE_TAG=$(echo "${{ github.event.after }}" | cut -c 1-7)
+          IMAGE_TAG=$(echo "${{ github.event.pull_request.head.sha }}" | cut -c 1-7)
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
       - name: Remove test Docker image
