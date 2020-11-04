@@ -218,7 +218,9 @@ clone_missing_repo() {
     fi
     # Always delete the temp dir
     rm -rf "$temp_dir"
-    return $result
+    if [ $result -ne 0 ]; then
+        exit 1
+    fi
 }
 
 process_single_repo() {
