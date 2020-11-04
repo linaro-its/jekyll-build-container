@@ -202,14 +202,23 @@ check_srv_varname() {
 # clone directly into $3 because it might not be empty and "git clone"
 # refuses to clone into a non-empty directory.
 clone_missing_repo() {
-    temp_dir=$(mktemp -d)
-    echo "Cloning $2"
-    git clone --quiet --no-tags --depth=1 "$2" "$temp_dir" || exit 1
-    echo "Copying cloned repo files into $3"
-    dest_path="/srv/source/merged_sources$3"
-    mkdir -p "$dest_path" || exit 1
-    do_rsync "$temp_dir"/ "$dest_path" || exit 1
-    rm -rf "$temp_dir" || exit 1
+    temp_dir=$(mktemp -d -p /srv/source)
+    echo "Cloning $1"
+    git clone --quiet --no-tags --depth=1 "$2" "$temp_dir"
+    result=$?
+    if [ $result -eq 0 ]; then
+        echo "Copying cloned repo files into $3"
+        dest_path="/srv/source/merged_sources$3"
+        mkdir -p "$dest_path"
+        result=$?
+    fi
+    if [ $result -eq 0 ]; then
+        do_rsync "$temp_dir"/ "$dest_path"
+        result=$?
+    fi
+    # Always delete the temp dir
+    rm -rf "$temp_dir"
+    return $result
 }
 
 process_single_repo() {
