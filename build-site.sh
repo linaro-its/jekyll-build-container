@@ -126,7 +126,7 @@ check_repo_url() {
         REPOURL=""
         return
     fi
-    echo "Reading $1 to look for $2"
+    # echo "Reading $1 to look for $2"
     # Use awk to:
     # a) find a line that starts with 'remote "'
     # b) then find a line that starts with 'url ='
@@ -139,7 +139,7 @@ check_repo_url() {
     for u in $REPO_URLS
     do
         parse_repo_url "$u"
-        echo "REPORUL=$REPOURL"
+        # echo "REPOURL=$REPOURL"
         if [ "${REPOURL,,}" == "${2,,}" ]; then
             # Got a match
             return
@@ -284,7 +284,7 @@ process_repos() {
     do
         RSYNC_EXCLUDE+=(--exclude "$d")
     done
-    echo "debug: RSYNC_EXCLUDE=${RSYNC_EXCLUDE[@]}"
+    # echo "debug: RSYNC_EXCLUDE=${RSYNC_EXCLUDE[@]}"
 
     # Iterate through the manifest and process each repo in turn.
     declare -A repo_array
