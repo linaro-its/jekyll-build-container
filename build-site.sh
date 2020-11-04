@@ -140,7 +140,7 @@ check_repo_url() {
     do
         parse_repo_url "$u"
         echo "REPORUL=$REPOURL"
-        if [ "$REPOURL" == "$2" ]; then
+        if [ "${REPOURL,,}" == "${2,,}" ]; then
             # Got a match
             return
         fi
