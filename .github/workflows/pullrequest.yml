@@ -22,7 +22,7 @@ jobs:
           path: container-repo
 
       - name: Merge test branch
-        uses: linaro-its/merge-test-branch@v2.5
+        uses: linaro-its/merge-test-branch@v2.6
         with:
           path: container-repo
 
