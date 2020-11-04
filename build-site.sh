@@ -126,6 +126,7 @@ check_repo_url() {
         REPOURL=""
         return
     fi
+    # echo "Reading $1 to look for $2"
     # Use awk to:
     # a) find a line that starts with 'remote "'
     # b) then find a line that starts with 'url ='
@@ -138,7 +139,8 @@ check_repo_url() {
     for u in $REPO_URLS
     do
         parse_repo_url "$u"
-        if [ "$REPOURL" == "$2" ]; then
+        # echo "REPOURL=$REPOURL"
+        if [ "${REPOURL,,}" == "${2,,}" ]; then
             # Got a match
             return
         fi
@@ -202,14 +204,25 @@ check_srv_varname() {
 # clone directly into $3 because it might not be empty and "git clone"
 # refuses to clone into a non-empty directory.
 clone_missing_repo() {
-    temp_dir=$(mktemp -d)
-    echo "Cloning $2"
-    git clone --quiet --no-tags --depth=1 "$2" "$temp_dir" || exit 1
-    echo "Copying cloned repo files into $3"
-    dest_path="/srv/source/merged_sources$3"
-    mkdir -p "$dest_path" || exit 1
-    do_rsync "$temp_dir"/ "$dest_path" || exit 1
-    rm -rf "$temp_dir" || exit 1
+    temp_dir=$(mktemp -d -p /srv/source)
+    echo "Cloning $1"
+    git clone --quiet --no-tags --depth=1 "$2" "$temp_dir"
+    result=$?
+    if [ $result -eq 0 ]; then
+        echo "Copying cloned repo files into $3"
+        dest_path="/srv/source/merged_sources$3"
+        mkdir -p "$dest_path"
+        result=$?
+    fi
+    if [ $result -eq 0 ]; then
+        do_rsync "$temp_dir"/ "$dest_path"
+        result=$?
+    fi
+    # Always delete the temp dir
+    rm -rf "$temp_dir"
+    if [ $result -ne 0 ]; then
+        exit 1
+    fi
 }
 
 process_single_repo() {
@@ -271,7 +284,7 @@ process_repos() {
     do
         RSYNC_EXCLUDE+=(--exclude "$d")
     done
-    echo "debug: RSYNC_EXCLUDE=${RSYNC_EXCLUDE[@]}"
+    # echo "debug: RSYNC_EXCLUDE=${RSYNC_EXCLUDE[@]}"
 
     # Iterate through the manifest and process each repo in turn.
     declare -A repo_array
