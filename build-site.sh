@@ -213,10 +213,9 @@ clone_missing_repo() {
         result=$?
     fi
     if [ $result -eq 0 ]; then
-    [
         do_rsync "$temp_dir"/ "$dest_path"
         result=$?
-    ]
+    fi
     # Always delete the temp dir
     rm -rf "$temp_dir"
     return $result
