@@ -138,13 +138,12 @@ ENV RUBY_GEMS \
  nokogiri:1.10.4 \
  # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
- # Jumbo-jekyll-theme latest version
+ # linaro-jekyll-theme latest versions
+ linaro-jekyll-theme:4.1.3 \
  linaro-jekyll-theme:4.1.2 \
- linaro-jekyll-theme:4.1.1 \
- linaro-jekyll-theme:4.0.2 \
- jumbo-jekyll-theme:6.0.2.1 \
  closure-compiler \
  # Staged for removal (ensures builds pass)
+ jumbo-jekyll-theme:6.0.2.1 \
  jumbo-jekyll-theme:5.6.6 \
  jumbo-jekyll-theme:5.6.5 \
  jumbo-jekyll-theme:6.0.0.1 \
