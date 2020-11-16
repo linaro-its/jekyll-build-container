@@ -130,8 +130,6 @@ ENV RUBY_GEMS \
  # Used by 96boards.org
  jekyll-toc:0.12.1 \
  jekyll-readme-index:0.3.0 \
- # Used by all Jekyll sites
- jumbo-jekyll-theme:5.6.9.2 \
  # Used by devicetree.org, op-tee.org
  mini_magick:4.9.3 \
  # Used by connect.linaro.org, linaro.cloud, linaro.org
@@ -139,6 +137,7 @@ ENV RUBY_GEMS \
  # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
  # linaro-jekyll-theme latest versions
+ linaro-jekyll-theme:4.1.6 \
  linaro-jekyll-theme:4.1.5 \
  linaro-jekyll-theme:4.1.4 \
  linaro-jekyll-theme:4.1.3 \
@@ -146,12 +145,7 @@ ENV RUBY_GEMS \
  closure-compiler \
  # Staged for removal (ensures builds pass)
  jumbo-jekyll-theme:6.0.2.1 \
- jumbo-jekyll-theme:5.6.6 \
- jumbo-jekyll-theme:5.6.5 \
- jumbo-jekyll-theme:6.0.0.1 \
- jumbo-jekyll-theme:6.0.0.4 \
- jumbo-jekyll-theme:6.0.0.5 \
- jumbo-jekyll-theme:6.0.1.4 
+ jumbo-jekyll-theme:5.6.9.2 
 
 LABEL org.linaro.gems=${RUBY_GEMS}
 
