@@ -128,7 +128,7 @@ ENV RUBY_GEMS \
  # Used by connect.linaro.org, linaro.cloud
  jekyll-responsive-image:1.5.2 \
  # Used by 96boards.org
- jekyll-toc:0.12.1 \
+ jekyll-toc:0.15.0 \
  jekyll-readme-index:0.3.0 \
  # Used by devicetree.org, op-tee.org
  mini_magick:4.9.3 \
@@ -137,6 +137,7 @@ ENV RUBY_GEMS \
  # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
  # linaro-jekyll-theme latest versions
+ linaro-jekyll-theme:4.2.0 \
  linaro-jekyll-theme:4.1.6 \
  linaro-jekyll-theme:4.1.5 \
  linaro-jekyll-theme:4.1.4 \
