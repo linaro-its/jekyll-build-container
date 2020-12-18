@@ -27,6 +27,9 @@ jobs:
           echo "IMAGE_TAG=$IMAGE_TAG" >> $GITHUB_ENV
 
       - run: env
+      
+      - run: echo "${{ secrets.DOCKER_USER }}" > /tmp/docker_user
+      - run: echo "${{ secrets.DOCKER_PASSWORD }}" > /tmp/docker_pw
 
       - run: cat $GITHUB_EVENT_PATH
 
