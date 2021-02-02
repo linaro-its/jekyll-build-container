@@ -1,6 +1,6 @@
 # Core tools for building Linaro's static web sites.
 
-# Set the base image to Ubuntu (version 18.04).
+# Set the base image to Ubuntu (version 20.04).
 # Uses the new "ubuntu-minimal" image.
 FROM ubuntu:20.04
 
@@ -76,7 +76,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # This is the last layer which will update Ubuntu packages.
 
 ENV VERSIONED_PACKAGES \
- ruby2.5-dev
+ ruby-dev
 LABEL org.linaro.versioned=${VERSIONED_PACKAGES}
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
