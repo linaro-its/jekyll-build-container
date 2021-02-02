@@ -257,19 +257,10 @@ process_single_repo() {
 }
 
 process_repos() {
-    # Experimenting with NOT cleaning out the merged_sources directory.
-    # The reason why is because 96Boards does a lot of image resizing
-    # and those images are stored under the "assets" folder in the source
-    # directory that Jekyll is looking at, i.e. the merged_sources directory.
-    # Clearing out the merged_sources directory on every build makes every
-    # subsequent build just as slow as before because all of the images
-    # have to be rebuilt. NOT clearing out the merged_sources directory
-    # allows the previous cache to be re-used.
-    #
-    # # If we already have a "merged_sources" directory, clean it out.
-    # if [ -d "/srv/source/merged_sources" ]; then
-    #     rm -r /srv/source/merged_sources
-    # fi
+    # If we already have a "merged_sources" directory, clean it out.
+    if [ -d "/srv/source/merged_sources" ]; then
+        rm -r /srv/source/merged_sources
+    fi
 
     # Get the possible built site directory names from the manifest and
     # build a rsync exclusion "command". Use an array so that the elements
