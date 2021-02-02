@@ -94,7 +94,7 @@ parse_repo_url() {
     # munge things around into the correct format.
     #
     # If the provided URL doesn't end with ".git", add that first
-    if [ "$1" == *.git ]; then
+    if [[ "$1" == *.git ]]; then
         INTERIM="$1"
     else
         INTERIM="$1.git"
@@ -126,7 +126,7 @@ check_repo_url() {
         REPOURL=""
         return
     fi
-    # echo "Reading $1 to look for $2"
+    echo "Reading $1 to look for $2"
     # Use awk to:
     # a) find a line that starts with 'remote "'
     # b) then find a line that starts with 'url ='
@@ -139,7 +139,7 @@ check_repo_url() {
     for u in $REPO_URLS
     do
         parse_repo_url "$u"
-        # echo "REPOURL=$REPOURL"
+        echo "REPOURL=$REPOURL"
         if [ "${REPOURL,,}" == "${2,,}" ]; then
             # Got a match
             return
