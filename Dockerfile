@@ -120,8 +120,8 @@ ENV RUBY_GEMS \
  # Used by devicetree.org
  jekyll-minimagick:0.0.4 \
  # Jekyll static site builder
- jekyll:3.8.0 \
- jekyll:4.0.0 \
+ jekyll:3.8.7 \
+ jekyll:4.0.1 \
  # Used by 96boards.org
  jekyll-relative-links:0.6.0 \
  jekyll-relative-links:0.6.1 \
