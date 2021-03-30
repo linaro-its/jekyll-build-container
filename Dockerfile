@@ -137,6 +137,7 @@ ENV RUBY_GEMS \
  # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
  # linaro-jekyll-theme latest versions
+ linaro-jekyll-theme:4.3.2 \
  linaro-jekyll-theme:4.3.0 \
  linaro-jekyll-theme:4.2.0 \
  linaro-jekyll-theme:4.1.6 \
