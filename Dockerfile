@@ -10,7 +10,7 @@ LABEL maintainer="it-services@linaro.org"
 # Install locale packages from Ubuntu repositories and set locale.
 RUN export DEBIAN_FRONTEND=noninteractive && \
  apt-get clean -y && \
- apt-get update --fix-missing && \
+ apt-get update && \
  apt-get install apt-utils -y && \
  apt-get upgrade -y && \
  apt-get install -y language-pack-en && \
@@ -57,7 +57,7 @@ ENV UNVERSIONED_DEPENDENCY_PACKAGES \
  nodejs
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
- apt-get update --fix-missing && \
+ apt-get update && \
  apt-get upgrade -y && \
  apt-get install -y --no-install-recommends \
  ${UNVERSIONED_DEPENDENCY_PACKAGES} \
@@ -80,7 +80,7 @@ ENV VERSIONED_PACKAGES \
 LABEL org.linaro.versioned=${VERSIONED_PACKAGES}
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
- apt-get update --fix-missing && \
+ apt-get update && \
  apt-get upgrade -y && \
  apt-get install -y --no-install-recommends \
  ${VERSIONED_PACKAGES} \
