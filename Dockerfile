@@ -10,7 +10,7 @@ LABEL maintainer="it-services@linaro.org"
 # Install locale packages from Ubuntu repositories and set locale.
 RUN export DEBIAN_FRONTEND=noninteractive && \
  apt-get clean -y && \
- apt-get update && \
+ apt-get update --fix-missing && \
  apt-get install apt-utils -y && \
  apt-get upgrade -y && \
  apt-get install -y language-pack-en && \
@@ -57,7 +57,7 @@ ENV UNVERSIONED_DEPENDENCY_PACKAGES \
  nodejs
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
- apt-get update && \
+ apt-get update --fix-missing && \
  apt-get upgrade -y && \
  apt-get install -y --no-install-recommends \
  ${UNVERSIONED_DEPENDENCY_PACKAGES} \
@@ -80,7 +80,7 @@ ENV VERSIONED_PACKAGES \
 LABEL org.linaro.versioned=${VERSIONED_PACKAGES}
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
- apt-get update && \
+ apt-get update --fix-missing && \
  apt-get upgrade -y && \
  apt-get install -y --no-install-recommends \
  ${VERSIONED_PACKAGES} \
@@ -140,6 +140,7 @@ ENV RUBY_GEMS \
  # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
  # linaro-jekyll-theme latest versions
+ linaro-jekyll-theme:5.0.0 \
  linaro-jekyll-theme:4.3.3 \
  linaro-jekyll-theme:4.3.0 \
  linaro-jekyll-theme:4.2.0 \
@@ -151,7 +152,7 @@ ENV RUBY_GEMS \
  closure-compiler \
  # Staged for removal (ensures builds pass)
  jumbo-jekyll-theme:6.0.2.1 \
- jumbo-jekyll-theme:5.6.9.2 
+ jumbo-jekyll-theme:5.6.9.2  
 
 LABEL org.linaro.gems=${RUBY_GEMS}
 
