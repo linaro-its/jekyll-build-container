@@ -346,14 +346,18 @@ jekyll_commands_common() {
 
 # Validate the source material before trying to build the site
 jekyll_doctor() {
-    echo -e "${YELLOW}Validating source files${NC}"
-    JEKYLL_ACTION="doctor" \
-    jekyll_commands_common ; \
-    EXIT_CODE=$?
-    # Return a non-zero code in the event of an error so we then
-    # don't go any further.
-    if [ "$EXIT_CODE" -ne 0 ]; then
-        exit "$EXIT_CODE"
+    if [ -z "$SKIP_JEKYLL_DOCTOR" ]; then
+        echo -e "${YELLOW}Validating source files${NC}"
+        JEKYLL_ACTION="doctor" \
+        jekyll_commands_common ; \
+        EXIT_CODE=$?
+        # Return a non-zero code in the event of an error so we then
+        # don't go any further.
+        if [ "$EXIT_CODE" -ne 0 ]; then
+            exit "$EXIT_CODE"
+        fi
+    else
+        echo -e "${YELLOW}Skipping jekyll doctor step${NC}"
     fi
 }
 
