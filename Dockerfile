@@ -134,9 +134,13 @@ ENV RUBY_GEMS \
  mini_magick:4.9.3 \
  # Used by connect.linaro.org, linaro.cloud, linaro.org
  nokogiri:1.10.4 \
+ # Pull titles from markdown files.
+ # Useful for documentation repo's that need to stay as pure markdown files.
+ jekyll-titles-from-headings:0.5.3 \
  # Used by (staging.)lkft.linaro.org
  seriously_simple_static_starter:0.7.0 \
  # linaro-jekyll-theme latest versions
+ linaro-jekyll-theme:5.0.1 \
  linaro-jekyll-theme:4.3.3 \
  linaro-jekyll-theme:4.3.0 \
  linaro-jekyll-theme:4.2.0 \
@@ -148,7 +152,7 @@ ENV RUBY_GEMS \
  closure-compiler \
  # Staged for removal (ensures builds pass)
  jumbo-jekyll-theme:6.0.2.1 \
- jumbo-jekyll-theme:5.6.9.2 
+ jumbo-jekyll-theme:5.6.9.2  
 
 LABEL org.linaro.gems=${RUBY_GEMS}
 
