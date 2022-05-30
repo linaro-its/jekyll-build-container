@@ -48,3 +48,9 @@ jobs:
             linaroits/jekyllsitebuild:latest
           build-args: |
             bamboo_build=${{ env.IMAGE_TAG }}
+
+      # Building multi-arch images doesn't result in a local copy of the
+      # image, and we "rely" on that for website builds to always have the
+      # latest image in place ... so force the latest image to be downloaded.
+      - name: Fetch newly built latest image
+        run: docker image pull linaroits/jekyllsitebuild:latest
