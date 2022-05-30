@@ -42,7 +42,7 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |
-            linaroits/jekyllsitebuild:$IMAGE_TAG
+            linaroits/jekyllsitebuild:${{IMAGE_TAG}}
             linaroits/jekyllsitebuild:latest
           build-args: |
-            bamboo_build=$IMAGE_TAG
+            bamboo_build=${{IMAGE_TAG}}
